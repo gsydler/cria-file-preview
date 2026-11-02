@@ -1,0 +1,501 @@
+id,city,note,amount,a long column header to scroll sideways
+1,Lausanne,plain,1.37,x
+2,Geneva,plain,2.74,xx
+3,Basel,plain,4.11,xxx
+4,Lugano,"quoted, with a comma",5.48,xxxx
+5,Zurich,plain,6.85,xxxxx
+6,Lausanne,plain,8.22,xxxxxx
+7,Geneva,"said ""hi""",9.59,xxxxxxx
+8,Basel,"quoted, with a comma",10.96,xxxxxxxx
+9,Lugano,plain,12.33,xxxxxxxxx
+10,Zurich,plain,13.7,xxxxxxxxxx
+11,Lausanne,plain,15.07,xxxxxxxxxxx
+12,Geneva,"quoted, with a comma",16.44,xxxxxxxxxxxx
+13,Basel,plain,17.81,xxxxxxxxxxxxx
+14,Lugano,"said ""hi""",19.18,xxxxxxxxxxxxxx
+15,Zurich,plain,20.55,xxxxxxxxxxxxxxx
+16,Lausanne,"quoted, with a comma",21.92,xxxxxxxxxxxxxxxx
+17,Geneva,plain,23.29,xxxxxxxxxxxxxxxxx
+18,Basel,plain,24.66,xxxxxxxxxxxxxxxxxx
+19,Lugano,plain,26.03,xxxxxxxxxxxxxxxxxxx
+20,Zurich,"quoted, with a comma",27.4,xxxxxxxxxxxxxxxxxxxx
+21,Lausanne,"said ""hi""",28.77,xxxxxxxxxxxxxxxxxxxxx
+22,Geneva,plain,30.14,xxxxxxxxxxxxxxxxxxxxxx
+23,Basel,plain,31.51,xxxxxxxxxxxxxxxxxxxxxxx
+24,Lugano,"quoted, with a comma",32.88,xxxxxxxxxxxxxxxxxxxxxxxx
+25,Zurich,plain,34.25,xxxxxxxxxxxxxxxxxxxxxxxxx
+26,Lausanne,plain,35.62,xxxxxxxxxxxxxxxxxxxxxxxxxx
+27,Geneva,plain,36.99,xxxxxxxxxxxxxxxxxxxxxxxxxxx
+28,Basel,"quoted, with a comma",38.36,xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+29,Lugano,plain,39.73,xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+30,Zurich,plain,41.1,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+31,Lausanne,plain,42.47,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+32,Geneva,"quoted, with a comma",43.84,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+33,Basel,plain,45.21,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+34,Lugano,plain,46.58,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+35,Zurich,"said ""hi""",47.95,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+36,Lausanne,"quoted, with a comma",49.32,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+37,Geneva,plain,50.69,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+38,Basel,plain,52.06,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+39,Lugano,plain,53.43,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+40,Zurich,"quoted, with a comma",54.8,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+41,Lausanne,plain,56.17,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+42,Geneva,"said ""hi""",57.54,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+43,Basel,plain,58.91,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+44,Lugano,"quoted, with a comma",60.28,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+45,Zurich,plain,61.65,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+46,Lausanne,plain,63.02,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+47,Geneva,plain,64.39,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+48,Basel,"quoted, with a comma",65.76,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+49,Lugano,"said ""hi""",67.13,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+50,Zurich,plain,68.5,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+51,Lausanne,plain,69.87,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+52,Geneva,"quoted, with a comma",71.24,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+53,Basel,plain,72.61,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+54,Lugano,plain,73.98,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+55,Zurich,plain,75.35,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+56,Lausanne,"quoted, with a comma",76.72,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+57,Geneva,plain,78.09,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+58,Basel,plain,79.46,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+59,Lugano,plain,80.83,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+60,Zurich,"quoted, with a comma",82.2,
+61,Lausanne,plain,83.57,x
+62,Geneva,plain,84.94,xx
+63,Basel,"said ""hi""",86.31,xxx
+64,Lugano,"quoted, with a comma",87.68,xxxx
+65,Zurich,plain,89.05,xxxxx
+66,Lausanne,plain,90.42,xxxxxx
+67,Geneva,plain,91.79,xxxxxxx
+68,Basel,"quoted, with a comma",93.16,xxxxxxxx
+69,Lugano,plain,94.53,xxxxxxxxx
+70,Zurich,"said ""hi""",95.9,xxxxxxxxxx
+71,Lausanne,plain,97.27,xxxxxxxxxxx
+72,Geneva,"quoted, with a comma",98.64,xxxxxxxxxxxx
+73,Basel,plain,100.01,xxxxxxxxxxxxx
+74,Lugano,plain,101.38,xxxxxxxxxxxxxx
+75,Zurich,plain,102.75,xxxxxxxxxxxxxxx
+76,Lausanne,"quoted, with a comma",104.12,xxxxxxxxxxxxxxxx
+77,Geneva,"said ""hi""",105.49,xxxxxxxxxxxxxxxxx
+78,Basel,plain,106.86,xxxxxxxxxxxxxxxxxx
+79,Lugano,plain,108.23,xxxxxxxxxxxxxxxxxxx
+80,Zurich,"quoted, with a comma",109.6,xxxxxxxxxxxxxxxxxxxx
+81,Lausanne,plain,110.97,xxxxxxxxxxxxxxxxxxxxx
+82,Geneva,plain,112.34,xxxxxxxxxxxxxxxxxxxxxx
+83,Basel,plain,113.71,xxxxxxxxxxxxxxxxxxxxxxx
+84,Lugano,"quoted, with a comma",115.08,xxxxxxxxxxxxxxxxxxxxxxxx
+85,Zurich,plain,116.45,xxxxxxxxxxxxxxxxxxxxxxxxx
+86,Lausanne,plain,117.82,xxxxxxxxxxxxxxxxxxxxxxxxxx
+87,Geneva,plain,119.19,xxxxxxxxxxxxxxxxxxxxxxxxxxx
+88,Basel,"quoted, with a comma",120.56,xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+89,Lugano,plain,121.93,xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+90,Zurich,plain,123.3,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+91,Lausanne,"said ""hi""",124.67,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+92,Geneva,"quoted, with a comma",126.04,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+93,Basel,plain,127.41,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+94,Lugano,plain,128.78,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+95,Zurich,plain,130.15,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+96,Lausanne,"quoted, with a comma",131.52,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+97,Geneva,plain,132.89,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+98,Basel,"said ""hi""",134.26,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+99,Lugano,plain,135.63,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+100,Zurich,"quoted, with a comma",137.0,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+101,Lausanne,plain,138.37,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+102,Geneva,plain,139.74,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+103,Basel,plain,141.11,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+104,Lugano,"quoted, with a comma",142.48,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+105,Zurich,"said ""hi""",143.85,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+106,Lausanne,plain,145.22,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+107,Geneva,plain,146.59,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+108,Basel,"quoted, with a comma",147.96,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+109,Lugano,plain,149.33,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+110,Zurich,plain,150.7,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+111,Lausanne,plain,152.07,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+112,Geneva,"quoted, with a comma",153.44,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+113,Basel,plain,154.81,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+114,Lugano,plain,156.18,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+115,Zurich,plain,157.55,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+116,Lausanne,"quoted, with a comma",158.92,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+117,Geneva,plain,160.29,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+118,Basel,plain,161.66,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+119,Lugano,"said ""hi""",163.03,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+120,Zurich,"quoted, with a comma",164.4,
+121,Lausanne,plain,165.77,x
+122,Geneva,plain,167.14,xx
+123,Basel,plain,168.51,xxx
+124,Lugano,"quoted, with a comma",169.88,xxxx
+125,Zurich,plain,171.25,xxxxx
+126,Lausanne,"said ""hi""",172.62,xxxxxx
+127,Geneva,plain,173.99,xxxxxxx
+128,Basel,"quoted, with a comma",175.36,xxxxxxxx
+129,Lugano,plain,176.73,xxxxxxxxx
+130,Zurich,plain,178.1,xxxxxxxxxx
+131,Lausanne,plain,179.47,xxxxxxxxxxx
+132,Geneva,"quoted, with a comma",180.84,xxxxxxxxxxxx
+133,Basel,"said ""hi""",182.21,xxxxxxxxxxxxx
+134,Lugano,plain,183.58,xxxxxxxxxxxxxx
+135,Zurich,plain,184.95,xxxxxxxxxxxxxxx
+136,Lausanne,"quoted, with a comma",186.32,xxxxxxxxxxxxxxxx
+137,Geneva,plain,187.69,xxxxxxxxxxxxxxxxx
+138,Basel,plain,189.06,xxxxxxxxxxxxxxxxxx
+139,Lugano,plain,190.43,xxxxxxxxxxxxxxxxxxx
+140,Zurich,"quoted, with a comma",191.8,xxxxxxxxxxxxxxxxxxxx
+141,Lausanne,plain,193.17,xxxxxxxxxxxxxxxxxxxxx
+142,Geneva,plain,194.54,xxxxxxxxxxxxxxxxxxxxxx
+143,Basel,plain,195.91,xxxxxxxxxxxxxxxxxxxxxxx
+144,Lugano,"quoted, with a comma",197.28,xxxxxxxxxxxxxxxxxxxxxxxx
+145,Zurich,plain,198.65,xxxxxxxxxxxxxxxxxxxxxxxxx
+146,Lausanne,plain,200.02,xxxxxxxxxxxxxxxxxxxxxxxxxx
+147,Geneva,"said ""hi""",201.39,xxxxxxxxxxxxxxxxxxxxxxxxxxx
+148,Basel,"quoted, with a comma",202.76,xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+149,Lugano,plain,204.13,xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+150,Zurich,plain,205.5,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+151,Lausanne,plain,206.87,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+152,Geneva,"quoted, with a comma",208.24,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+153,Basel,plain,209.61,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+154,Lugano,"said ""hi""",210.98,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+155,Zurich,plain,212.35,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+156,Lausanne,"quoted, with a comma",213.72,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+157,Geneva,plain,215.09,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+158,Basel,plain,216.46,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+159,Lugano,plain,217.83,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+160,Zurich,"quoted, with a comma",219.2,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+161,Lausanne,"said ""hi""",220.57,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+162,Geneva,plain,221.94,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+163,Basel,plain,223.31,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+164,Lugano,"quoted, with a comma",224.68,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+165,Zurich,plain,226.05,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+166,Lausanne,plain,227.42,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+167,Geneva,plain,228.79,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+168,Basel,"quoted, with a comma",230.16,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+169,Lugano,plain,231.53,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+170,Zurich,plain,232.9,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+171,Lausanne,plain,234.27,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+172,Geneva,"quoted, with a comma",235.64,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+173,Basel,plain,237.01,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+174,Lugano,plain,238.38,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+175,Zurich,"said ""hi""",239.75,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+176,Lausanne,"quoted, with a comma",241.12,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+177,Geneva,plain,242.49,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+178,Basel,plain,243.86,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+179,Lugano,plain,245.23,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+180,Zurich,"quoted, with a comma",246.6,
+181,Lausanne,plain,247.97,x
+182,Geneva,"said ""hi""",249.34,xx
+183,Basel,plain,250.71,xxx
+184,Lugano,"quoted, with a comma",252.08,xxxx
+185,Zurich,plain,253.45,xxxxx
+186,Lausanne,plain,254.82,xxxxxx
+187,Geneva,plain,256.19,xxxxxxx
+188,Basel,"quoted, with a comma",257.56,xxxxxxxx
+189,Lugano,"said ""hi""",258.93,xxxxxxxxx
+190,Zurich,plain,260.3,xxxxxxxxxx
+191,Lausanne,plain,261.67,xxxxxxxxxxx
+192,Geneva,"quoted, with a comma",263.04,xxxxxxxxxxxx
+193,Basel,plain,264.41,xxxxxxxxxxxxx
+194,Lugano,plain,265.78,xxxxxxxxxxxxxx
+195,Zurich,plain,267.15,xxxxxxxxxxxxxxx
+196,Lausanne,"quoted, with a comma",268.52,xxxxxxxxxxxxxxxx
+197,Geneva,plain,269.89,xxxxxxxxxxxxxxxxx
+198,Basel,plain,271.26,xxxxxxxxxxxxxxxxxx
+199,Lugano,plain,272.63,xxxxxxxxxxxxxxxxxxx
+200,Zurich,"quoted, with a comma",274.0,xxxxxxxxxxxxxxxxxxxx
+201,Lausanne,plain,275.37,xxxxxxxxxxxxxxxxxxxxx
+202,Geneva,plain,276.74,xxxxxxxxxxxxxxxxxxxxxx
+203,Basel,"said ""hi""",278.11,xxxxxxxxxxxxxxxxxxxxxxx
+204,Lugano,"quoted, with a comma",279.48,xxxxxxxxxxxxxxxxxxxxxxxx
+205,Zurich,plain,280.85,xxxxxxxxxxxxxxxxxxxxxxxxx
+206,Lausanne,plain,282.22,xxxxxxxxxxxxxxxxxxxxxxxxxx
+207,Geneva,plain,283.59,xxxxxxxxxxxxxxxxxxxxxxxxxxx
+208,Basel,"quoted, with a comma",284.96,xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+209,Lugano,plain,286.33,xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+210,Zurich,"said ""hi""",287.7,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+211,Lausanne,plain,289.07,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+212,Geneva,"quoted, with a comma",290.44,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+213,Basel,plain,291.81,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+214,Lugano,plain,293.18,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+215,Zurich,plain,294.55,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+216,Lausanne,"quoted, with a comma",295.92,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+217,Geneva,"said ""hi""",297.29,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+218,Basel,plain,298.66,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+219,Lugano,plain,300.03,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+220,Zurich,"quoted, with a comma",301.4,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+221,Lausanne,plain,302.77,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+222,Geneva,plain,304.14,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+223,Basel,plain,305.51,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+224,Lugano,"quoted, with a comma",306.88,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+225,Zurich,plain,308.25,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+226,Lausanne,plain,309.62,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+227,Geneva,plain,310.99,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+228,Basel,"quoted, with a comma",312.36,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+229,Lugano,plain,313.73,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+230,Zurich,plain,315.1,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+231,Lausanne,"said ""hi""",316.47,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+232,Geneva,"quoted, with a comma",317.84,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+233,Basel,plain,319.21,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+234,Lugano,plain,320.58,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+235,Zurich,plain,321.95,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+236,Lausanne,"quoted, with a comma",323.32,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+237,Geneva,plain,324.69,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+238,Basel,"said ""hi""",326.06,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+239,Lugano,plain,327.43,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+240,Zurich,"quoted, with a comma",328.8,
+241,Lausanne,plain,330.17,x
+242,Geneva,plain,331.54,xx
+243,Basel,plain,332.91,xxx
+244,Lugano,"quoted, with a comma",334.28,xxxx
+245,Zurich,"said ""hi""",335.65,xxxxx
+246,Lausanne,plain,337.02,xxxxxx
+247,Geneva,plain,338.39,xxxxxxx
+248,Basel,"quoted, with a comma",339.76,xxxxxxxx
+249,Lugano,plain,341.13,xxxxxxxxx
+250,Zurich,plain,342.5,xxxxxxxxxx
+251,Lausanne,plain,343.87,xxxxxxxxxxx
+252,Geneva,"quoted, with a comma",345.24,xxxxxxxxxxxx
+253,Basel,plain,346.61,xxxxxxxxxxxxx
+254,Lugano,plain,347.98,xxxxxxxxxxxxxx
+255,Zurich,plain,349.35,xxxxxxxxxxxxxxx
+256,Lausanne,"quoted, with a comma",350.72,xxxxxxxxxxxxxxxx
+257,Geneva,plain,352.09,xxxxxxxxxxxxxxxxx
+258,Basel,plain,353.46,xxxxxxxxxxxxxxxxxx
+259,Lugano,"said ""hi""",354.83,xxxxxxxxxxxxxxxxxxx
+260,Zurich,"quoted, with a comma",356.2,xxxxxxxxxxxxxxxxxxxx
+261,Lausanne,plain,357.57,xxxxxxxxxxxxxxxxxxxxx
+262,Geneva,plain,358.94,xxxxxxxxxxxxxxxxxxxxxx
+263,Basel,plain,360.31,xxxxxxxxxxxxxxxxxxxxxxx
+264,Lugano,"quoted, with a comma",361.68,xxxxxxxxxxxxxxxxxxxxxxxx
+265,Zurich,plain,363.05,xxxxxxxxxxxxxxxxxxxxxxxxx
+266,Lausanne,"said ""hi""",364.42,xxxxxxxxxxxxxxxxxxxxxxxxxx
+267,Geneva,plain,365.79,xxxxxxxxxxxxxxxxxxxxxxxxxxx
+268,Basel,"quoted, with a comma",367.16,xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+269,Lugano,plain,368.53,xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+270,Zurich,plain,369.9,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+271,Lausanne,plain,371.27,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+272,Geneva,"quoted, with a comma",372.64,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+273,Basel,"said ""hi""",374.01,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+274,Lugano,plain,375.38,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+275,Zurich,plain,376.75,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+276,Lausanne,"quoted, with a comma",378.12,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+277,Geneva,plain,379.49,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+278,Basel,plain,380.86,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+279,Lugano,plain,382.23,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+280,Zurich,"quoted, with a comma",383.6,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+281,Lausanne,plain,384.97,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+282,Geneva,plain,386.34,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+283,Basel,plain,387.71,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+284,Lugano,"quoted, with a comma",389.08,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+285,Zurich,plain,390.45,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+286,Lausanne,plain,391.82,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+287,Geneva,"said ""hi""",393.19,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+288,Basel,"quoted, with a comma",394.56,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+289,Lugano,plain,395.93,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+290,Zurich,plain,397.3,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+291,Lausanne,plain,398.67,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+292,Geneva,"quoted, with a comma",400.04,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+293,Basel,plain,401.41,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+294,Lugano,"said ""hi""",402.78,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+295,Zurich,plain,404.15,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+296,Lausanne,"quoted, with a comma",405.52,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+297,Geneva,plain,406.89,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+298,Basel,plain,408.26,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+299,Lugano,plain,409.63,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+300,Zurich,"quoted, with a comma",411.0,
+301,Lausanne,"said ""hi""",412.37,x
+302,Geneva,plain,413.74,xx
+303,Basel,plain,415.11,xxx
+304,Lugano,"quoted, with a comma",416.48,xxxx
+305,Zurich,plain,417.85,xxxxx
+306,Lausanne,plain,419.22,xxxxxx
+307,Geneva,plain,420.59,xxxxxxx
+308,Basel,"quoted, with a comma",421.96,xxxxxxxx
+309,Lugano,plain,423.33,xxxxxxxxx
+310,Zurich,plain,424.7,xxxxxxxxxx
+311,Lausanne,plain,426.07,xxxxxxxxxxx
+312,Geneva,"quoted, with a comma",427.44,xxxxxxxxxxxx
+313,Basel,plain,428.81,xxxxxxxxxxxxx
+314,Lugano,plain,430.18,xxxxxxxxxxxxxx
+315,Zurich,"said ""hi""",431.55,xxxxxxxxxxxxxxx
+316,Lausanne,"quoted, with a comma",432.92,xxxxxxxxxxxxxxxx
+317,Geneva,plain,434.29,xxxxxxxxxxxxxxxxx
+318,Basel,plain,435.66,xxxxxxxxxxxxxxxxxx
+319,Lugano,plain,437.03,xxxxxxxxxxxxxxxxxxx
+320,Zurich,"quoted, with a comma",438.4,xxxxxxxxxxxxxxxxxxxx
+321,Lausanne,plain,439.77,xxxxxxxxxxxxxxxxxxxxx
+322,Geneva,"said ""hi""",441.14,xxxxxxxxxxxxxxxxxxxxxx
+323,Basel,plain,442.51,xxxxxxxxxxxxxxxxxxxxxxx
+324,Lugano,"quoted, with a comma",443.88,xxxxxxxxxxxxxxxxxxxxxxxx
+325,Zurich,plain,445.25,xxxxxxxxxxxxxxxxxxxxxxxxx
+326,Lausanne,plain,446.62,xxxxxxxxxxxxxxxxxxxxxxxxxx
+327,Geneva,plain,447.99,xxxxxxxxxxxxxxxxxxxxxxxxxxx
+328,Basel,"quoted, with a comma",449.36,xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+329,Lugano,"said ""hi""",450.73,xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+330,Zurich,plain,452.1,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+331,Lausanne,plain,453.47,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+332,Geneva,"quoted, with a comma",454.84,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+333,Basel,plain,456.21,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+334,Lugano,plain,457.58,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+335,Zurich,plain,458.95,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+336,Lausanne,"quoted, with a comma",460.32,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+337,Geneva,plain,461.69,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+338,Basel,plain,463.06,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+339,Lugano,plain,464.43,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+340,Zurich,"quoted, with a comma",465.8,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+341,Lausanne,plain,467.17,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+342,Geneva,plain,468.54,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+343,Basel,"said ""hi""",469.91,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+344,Lugano,"quoted, with a comma",471.28,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+345,Zurich,plain,472.65,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+346,Lausanne,plain,474.02,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+347,Geneva,plain,475.39,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+348,Basel,"quoted, with a comma",476.76,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+349,Lugano,plain,478.13,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+350,Zurich,"said ""hi""",479.5,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+351,Lausanne,plain,480.87,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+352,Geneva,"quoted, with a comma",482.24,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+353,Basel,plain,483.61,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+354,Lugano,plain,484.98,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+355,Zurich,plain,486.35,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+356,Lausanne,"quoted, with a comma",487.72,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+357,Geneva,"said ""hi""",489.09,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+358,Basel,plain,490.46,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+359,Lugano,plain,491.83,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+360,Zurich,"quoted, with a comma",493.2,
+361,Lausanne,plain,494.57,x
+362,Geneva,plain,495.94,xx
+363,Basel,plain,497.31,xxx
+364,Lugano,"quoted, with a comma",498.68,xxxx
+365,Zurich,plain,500.05,xxxxx
+366,Lausanne,plain,501.42,xxxxxx
+367,Geneva,plain,502.79,xxxxxxx
+368,Basel,"quoted, with a comma",504.16,xxxxxxxx
+369,Lugano,plain,505.53,xxxxxxxxx
+370,Zurich,plain,506.9,xxxxxxxxxx
+371,Lausanne,"said ""hi""",508.27,xxxxxxxxxxx
+372,Geneva,"quoted, with a comma",509.64,xxxxxxxxxxxx
+373,Basel,plain,511.01,xxxxxxxxxxxxx
+374,Lugano,plain,512.38,xxxxxxxxxxxxxx
+375,Zurich,plain,513.75,xxxxxxxxxxxxxxx
+376,Lausanne,"quoted, with a comma",515.12,xxxxxxxxxxxxxxxx
+377,Geneva,plain,516.49,xxxxxxxxxxxxxxxxx
+378,Basel,"said ""hi""",517.86,xxxxxxxxxxxxxxxxxx
+379,Lugano,plain,519.23,xxxxxxxxxxxxxxxxxxx
+380,Zurich,"quoted, with a comma",520.6,xxxxxxxxxxxxxxxxxxxx
+381,Lausanne,plain,521.97,xxxxxxxxxxxxxxxxxxxxx
+382,Geneva,plain,523.34,xxxxxxxxxxxxxxxxxxxxxx
+383,Basel,plain,524.71,xxxxxxxxxxxxxxxxxxxxxxx
+384,Lugano,"quoted, with a comma",526.08,xxxxxxxxxxxxxxxxxxxxxxxx
+385,Zurich,"said ""hi""",527.45,xxxxxxxxxxxxxxxxxxxxxxxxx
+386,Lausanne,plain,528.82,xxxxxxxxxxxxxxxxxxxxxxxxxx
+387,Geneva,plain,530.19,xxxxxxxxxxxxxxxxxxxxxxxxxxx
+388,Basel,"quoted, with a comma",531.56,xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+389,Lugano,plain,532.93,xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+390,Zurich,plain,534.3,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+391,Lausanne,plain,535.67,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+392,Geneva,"quoted, with a comma",537.04,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+393,Basel,plain,538.41,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+394,Lugano,plain,539.78,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+395,Zurich,plain,541.15,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+396,Lausanne,"quoted, with a comma",542.52,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+397,Geneva,plain,543.89,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+398,Basel,plain,545.26,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+399,Lugano,"said ""hi""",546.63,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+400,Zurich,"quoted, with a comma",548.0,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+401,Lausanne,plain,549.37,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+402,Geneva,plain,550.74,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+403,Basel,plain,552.11,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+404,Lugano,"quoted, with a comma",553.48,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+405,Zurich,plain,554.85,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+406,Lausanne,"said ""hi""",556.22,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+407,Geneva,plain,557.59,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+408,Basel,"quoted, with a comma",558.96,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+409,Lugano,plain,560.33,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+410,Zurich,plain,561.7,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+411,Lausanne,plain,563.07,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+412,Geneva,"quoted, with a comma",564.44,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+413,Basel,"said ""hi""",565.81,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+414,Lugano,plain,567.18,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+415,Zurich,plain,568.55,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+416,Lausanne,"quoted, with a comma",569.92,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+417,Geneva,plain,571.29,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+418,Basel,plain,572.66,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+419,Lugano,plain,574.03,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+420,Zurich,"quoted, with a comma",575.4,
+421,Lausanne,plain,576.77,x
+422,Geneva,plain,578.14,xx
+423,Basel,plain,579.51,xxx
+424,Lugano,"quoted, with a comma",580.88,xxxx
+425,Zurich,plain,582.25,xxxxx
+426,Lausanne,plain,583.62,xxxxxx
+427,Geneva,"said ""hi""",584.99,xxxxxxx
+428,Basel,"quoted, with a comma",586.36,xxxxxxxx
+429,Lugano,plain,587.73,xxxxxxxxx
+430,Zurich,plain,589.1,xxxxxxxxxx
+431,Lausanne,plain,590.47,xxxxxxxxxxx
+432,Geneva,"quoted, with a comma",591.84,xxxxxxxxxxxx
+433,Basel,plain,593.21,xxxxxxxxxxxxx
+434,Lugano,"said ""hi""",594.58,xxxxxxxxxxxxxx
+435,Zurich,plain,595.95,xxxxxxxxxxxxxxx
+436,Lausanne,"quoted, with a comma",597.32,xxxxxxxxxxxxxxxx
+437,Geneva,plain,598.69,xxxxxxxxxxxxxxxxx
+438,Basel,plain,600.06,xxxxxxxxxxxxxxxxxx
+439,Lugano,plain,601.43,xxxxxxxxxxxxxxxxxxx
+440,Zurich,"quoted, with a comma",602.8,xxxxxxxxxxxxxxxxxxxx
+441,Lausanne,"said ""hi""",604.17,xxxxxxxxxxxxxxxxxxxxx
+442,Geneva,plain,605.54,xxxxxxxxxxxxxxxxxxxxxx
+443,Basel,plain,606.91,xxxxxxxxxxxxxxxxxxxxxxx
+444,Lugano,"quoted, with a comma",608.28,xxxxxxxxxxxxxxxxxxxxxxxx
+445,Zurich,plain,609.65,xxxxxxxxxxxxxxxxxxxxxxxxx
+446,Lausanne,plain,611.02,xxxxxxxxxxxxxxxxxxxxxxxxxx
+447,Geneva,plain,612.39,xxxxxxxxxxxxxxxxxxxxxxxxxxx
+448,Basel,"quoted, with a comma",613.76,xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+449,Lugano,plain,615.13,xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+450,Zurich,plain,616.5,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+451,Lausanne,plain,617.87,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+452,Geneva,"quoted, with a comma",619.24,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+453,Basel,plain,620.61,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+454,Lugano,plain,621.98,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+455,Zurich,"said ""hi""",623.35,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+456,Lausanne,"quoted, with a comma",624.72,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+457,Geneva,plain,626.09,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+458,Basel,plain,627.46,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+459,Lugano,plain,628.83,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+460,Zurich,"quoted, with a comma",630.2,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+461,Lausanne,plain,631.57,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+462,Geneva,"said ""hi""",632.94,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+463,Basel,plain,634.31,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+464,Lugano,"quoted, with a comma",635.68,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+465,Zurich,plain,637.05,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+466,Lausanne,plain,638.42,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+467,Geneva,plain,639.79,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+468,Basel,"quoted, with a comma",641.16,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+469,Lugano,"said ""hi""",642.53,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+470,Zurich,plain,643.9,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+471,Lausanne,plain,645.27,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+472,Geneva,"quoted, with a comma",646.64,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+473,Basel,plain,648.01,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+474,Lugano,plain,649.38,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+475,Zurich,plain,650.75,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+476,Lausanne,"quoted, with a comma",652.12,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+477,Geneva,plain,653.49,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+478,Basel,plain,654.86,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+479,Lugano,plain,656.23,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+480,Zurich,"quoted, with a comma",657.6,
+481,Lausanne,plain,658.97,x
+482,Geneva,plain,660.34,xx
+483,Basel,"said ""hi""",661.71,xxx
+484,Lugano,"quoted, with a comma",663.08,xxxx
+485,Zurich,plain,664.45,xxxxx
+486,Lausanne,plain,665.82,xxxxxx
+487,Geneva,plain,667.19,xxxxxxx
+488,Basel,"quoted, with a comma",668.56,xxxxxxxx
+489,Lugano,plain,669.93,xxxxxxxxx
+490,Zurich,"said ""hi""",671.3,xxxxxxxxxx
+491,Lausanne,plain,672.67,xxxxxxxxxxx
+492,Geneva,"quoted, with a comma",674.04,xxxxxxxxxxxx
+493,Basel,plain,675.41,xxxxxxxxxxxxx
+494,Lugano,plain,676.78,xxxxxxxxxxxxxx
+495,Zurich,plain,678.15,xxxxxxxxxxxxxxx
+496,Lausanne,"quoted, with a comma",679.52,xxxxxxxxxxxxxxxx
+497,Geneva,"said ""hi""",680.89,xxxxxxxxxxxxxxxxx
+498,Basel,plain,682.26,xxxxxxxxxxxxxxxxxx
+499,Lugano,plain,683.63,xxxxxxxxxxxxxxxxxxx
+500,Zurich,"quoted, with a comma",685.0,xxxxxxxxxxxxxxxxxxxx

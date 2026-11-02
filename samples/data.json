@@ -1,0 +1,73 @@
+{
+  "name": "sample",
+  "version": 3,
+  "enabled": true,
+  "missing": null,
+  "tags": [
+    "markdown",
+    "pdf",
+    "json"
+  ],
+  "nested": {
+    "deep": {
+      "deeper": [
+        1,
+        2,
+        {
+          "leaf": "found"
+        }
+      ]
+    },
+    "path/with/slash": "ok"
+  },
+  "list": [
+    {
+      "id": 0,
+      "city": "Zurich"
+    },
+    {
+      "id": 1,
+      "city": "Lausanne"
+    },
+    {
+      "id": 2,
+      "city": "Geneva"
+    },
+    {
+      "id": 3,
+      "city": "Basel"
+    },
+    {
+      "id": 4,
+      "city": "Lugano"
+    },
+    {
+      "id": 5,
+      "city": "Zurich"
+    },
+    {
+      "id": 6,
+      "city": "Lausanne"
+    },
+    {
+      "id": 7,
+      "city": "Geneva"
+    },
+    {
+      "id": 8,
+      "city": "Basel"
+    },
+    {
+      "id": 9,
+      "city": "Lugano"
+    },
+    {
+      "id": 10,
+      "city": "Zurich"
+    },
+    {
+      "id": 11,
+      "city": "Lausanne"
+    }
+  ]
+}

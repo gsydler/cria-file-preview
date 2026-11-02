@@ -1,0 +1,9 @@
+# The CI's actions are the repo's only dependencies.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "Bump"

@@ -1,0 +1,6 @@
+# Written by Herdr into a mod folder (`herdr-app check`, the live app): rewritten per version
+jsconfig.json
+*.d.ts
+
+.DS_Store
+node_modules/

@@ -1,0 +1,2 @@
+Plain text, shown in the code viewer.
+No extension-specific colours.
