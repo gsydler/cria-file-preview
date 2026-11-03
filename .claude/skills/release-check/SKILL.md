@@ -35,7 +35,7 @@ Read every changed line against each rule. Done when each file in the change set
 - **Links:** only `http`, `https` and `mailto` leave Herdr; other schemes are refused.
 - **Read-only:** the mod changes no file of the person's. The only commands that write go to its cache folder; the ⋯ menu only opens, reveals and copies. A command that moves, deletes or edits a file is a finding.
 - **Opener contract:** a change to the mod name, the `props` or the shared keys in `open-file.js` breaks panels patched at install time; it needs a breaking-change entry and the RECIPE's "Install" updated.
-- **Data:** no secrets, tokens, internal hostnames, work names or personal data in code, `samples/`, docs, or `preview.png` (look at the image).
+- **Data:** no secrets, tokens, internal hostnames, work names or personal data in code, `samples/`, docs, `assets/pane.png` or `preview.png` (look at the images).
 - **CI:** `.github/workflows/` keeps `permissions: contents: read` and `persist-credentials: false`, and adds no third-party action.
 - **Disclosure:** `README.md` ("What it does on your computer") and `RECIPE.md` ("Watch out") list every program the mod runs, every network access and every file it reads or writes, as they stand after the change.
 
@@ -53,7 +53,7 @@ Compare `README.md` ("Features", "Platforms") and `RECIPE.md` ("What you see", "
 
 ## 7. Preview
 
-Compare the change set with `git log -1 --format=%h -- preview.png`. When anything drawn changed since then (`viewers/`, `preview.js`, `menu.js`, the SVG icons), the preview is stale: regenerate it by [PREVIEW.md](PREVIEW.md). Done when the preview shows the current build, or the change set drew nothing new.
+Compare the change set with `git log -1 --format=%h -- preview.png`. When anything drawn changed since then (`viewers/`, `preview.js`, `menu.js`, the SVG icons), the preview is stale: regenerate it by [PREVIEW.md](PREVIEW.md). When the features changed, the banner's text in `assets/banner.html` is stale too: update it and re-render (PREVIEW.md, step 7). Done when the preview shows the current build, or the change set drew nothing new.
 
 ## 8. Report
 

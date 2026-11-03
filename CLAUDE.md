@@ -25,5 +25,5 @@ The mod name also appears in asset paths (`mods/cria-file-preview/…`), `openOv
 ## Conventions
 
 - Commit subjects in the imperative, under 72 characters, with a `Changelog:` trailer (`added`, `fixed`, `changed`, `deprecated`, `removed`, `security`, `performance` or `other`); the release-check skill turns them into `CHANGELOG.md` entries.
-- `preview.png` is a crop of the mod's pane only: `herdr-app shot` captures the whole window, including other spaces and agents.
+- `preview.png` is the banner `scripts/banner.sh` renders from `assets/banner.html`; the screenshot in it, `assets/pane.png`, is a crop of the mod's pane only, because `herdr-app shot` captures the whole window, including other spaces and agents. The steps are in the release-check skill's `PREVIEW.md`.
 - Write for the person first in `RECIPE.md` and `README.md`: what they see and what it does on their computer, then the code.

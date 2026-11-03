@@ -2,7 +2,7 @@
 
 A [Herdr](https://herdr.dev) mod that previews a file in a tab or a split: Markdown with working links and images, PDF, images, CSV and TSV tables, JSON as a tree, and any other text as code. Read-only, follows your theme, and reloads when the file changes on disk.
 
-![cria-file-preview showing a Markdown file](preview.png)
+![cria-file-preview: open any file right beside your agents](preview.png)
 
 ## Features
 
@@ -66,10 +66,11 @@ Herdr asks you to know this before adding a mod:
 node --test                        # the pure modules, every sample through them, the image and PDF scripts run for real
 node scripts/check-herdr.mjs       # Herdr's requirements for a shared mod (also in CI)
 herdr-app check mods/cria-file-preview   # loads and renders the mod; needs the app
+scripts/banner.sh                  # renders preview.png from assets/banner.html; needs Brave, Chrome or Chromium, and the internet for the fonts
 ```
 
 Changes are listed in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
-[Apache-2.0](LICENSE)
+[Apache-2.0](LICENSE). The banner's icons are from [Lucide](https://lucide.dev) (ISC; the notice is in `assets/banner.html`).
