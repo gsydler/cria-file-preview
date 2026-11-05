@@ -24,6 +24,7 @@ Every change people using the mod would notice. The format follows [Keep a Chang
 - Open in editor on Windows handles an editor whose path has spaces, and finds `$EDITOR` set in your PowerShell profile.
 - Open in editor no longer does nothing on macOS or Linux when your login shell is slow to start.
 - An SVG whose tag has a prefix, like `<svg:svg>`, opens at its real size.
+- With the Files panel patched as `RECIPE.md` describes, a click on a file no longer sends its tree to another folder.
 
 ### Security
 
