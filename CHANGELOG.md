@@ -4,6 +4,8 @@ Every change people using the mod would notice. The format follows [Keep a Chang
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-05
+
 ### Added
 
 - First public version of the mod, moved from gsydler's dotfiles (`herdr-mods/file-preview`) and renamed `cria-file-preview`: the Markdown, PDF, image, table, JSON and code viewers, live reload, Back, and the ⋯ menu listed under Features in the README.
