@@ -45,8 +45,27 @@ Herdr's Files panel (the shipped `files` mod) shows a clicked file inline, as pl
 1. **Find the panel.** `grep -n '"mod"' ~/.config/herdr-app/layouts/<shown layout>.json` (`herdr-app status` names the shown layout). A block with `"mod": "files"` is Herdr's panel; any other mod showing files is the person's own.
 2. **Make it editable.** Herdr's layouts and mods are read-only and replaced on every start. For Herdr's panel: `herdr-app do mod.clone '{"name":"files","as":"files-preview"}'`. If the shown layout is Herdr's too (`main`, `terminals`, `win98`): `herdr-app do layout.clone '{"name":"<layout>","as":"<layout>-preview"}'`, which switches to the clone. In the layout the person now uses, change that block's `"mod": "files"` to `"files-preview"`. A panel of the person's own is edited in place.
 3. **Send file clicks here.** In the panel's `main.js`, the row's click calls `this.show(path, cx)` for a file (Herdr's panel; another panel has its own handler). Replace that call, keeping folders as they are, with `run("tab.new", { name: <file name>, mod: "cria-file-preview", props: { file: <absolute path>, on: <machine or null> } })`; in Herdr's panel the absolute path is `` `${this.root}/${path}` `` and the machine is `this.on`. Import `run` from `"herdr"`.
-4. **Optional, reuse a shown preview:** copy `open-file.js` into the panel's folder (a mod can't import from another mod's folder). Before opening, `shownIn(shared(OPEN), shared(MOVED), file, on, new Set(panes().map((p) => p.pane)))` gives the pane already showing the file, to focus instead; after opening, record the new pane with `setShared(OPEN, { ...shared(OPEN), [previewId(file, on)]: <pane id> })`. `openCommand({ file, on, mode })` builds the tab or split command.
-5. `herdr-app check` the panel, and the layout shows no error in `herdr-app status`.
+4. **Keep the tree where it was.** The panel roots its tree on the focused pane's folder (`location()`: `pane?.cwd || f?.cwd || space?.folder`). The preview tab is a mod pane with no folder, so after the click the tree falls back to `space.folder`, which is only where the space's first shell started (another project, or `~` for a space made with Cmd+N from a terminal at home): the person clicks a file and the tree shows the wrong folder. Remember the last terminal folder per space and use it while a mod pane is focused:
+
+   ```js
+   const lastRoot = new Map();
+   function location() {
+     const space = spaces().find(s => s.active), f = focused();
+     const pane = f?.pane ? panes().find(p => p.pane === f.pane) : null;
+     const on = f?.pane === null ? (f.terminal?.includes("/") ? f.terminal.split("/")[0] : null) : space?.machine ?? null;
+     let cwd = pane?.cwd || f?.cwd;
+     if (cwd) { if (space) lastRoot.set(space.id, cwd); }
+     else if (space) {
+       const tabs = new Set(space.tabs.map(t => t.id));
+       cwd = lastRoot.get(space.id) || panes().find(p => p.terminal && p.cwd && tabs.has(p.tab))?.cwd || space.folder;
+     }
+     return { cwd, on, space: space?.id };
+   }
+   ```
+
+   The panel's context key stays the same, so the folders the person had open stay open across the click too.
+5. **Optional, reuse a shown preview:** copy `open-file.js` into the panel's folder (a mod can't import from another mod's folder). Before opening, `shownIn(shared(OPEN), shared(MOVED), file, on, new Set(panes().map((p) => p.pane)))` gives the pane already showing the file, to focus instead; after opening, record the new pane with `setShared(OPEN, { ...shared(OPEN), [previewId(file, on)]: <pane id> })`. `openCommand({ file, on, mode })` builds the tab or split command.
+6. `herdr-app check` the panel, and the layout shows no error in `herdr-app status`.
 
 Undo: `ctrl-shift-l` back to the person's previous layout (or the block's `mod` back to `"files"`), then delete the clones.
 
@@ -74,6 +93,7 @@ Undo: `ctrl-shift-l` back to the person's previous layout (or the block's `mod` 
 - `//` is a share on Windows and a slip elsewhere: a panel at `/` joins root and path into `//etc/x`. The document decides which a link means.
 - Herdr's environment lacks `$EDITOR` when the shell sets it in `.zshenv`; ask the login shell.
 - The ⋯ menu's popup closes on the click, and its copy's tasks stop within 250 ms; only an `exec` already started goes on. An action starts its one program straight away: for Open in editor, one `sh` process asks the login shell and opens the file, and on Windows one PowerShell process loads the profile and does the same.
+- A mod pane has no folder (`panes()` gives `cwd: null`, `focused().cwd` is null too), and `space.folder` is where the space's first shell started, not where its terminal is now. Any panel that follows the focused pane's folder jumps there once the preview tab has the focus; Install step 4 keeps the terminal's folder.
 - The alt modifier arrives with the mouse press, not the virtual list's click: record it on mouse down.
 
 ## Done when
@@ -85,4 +105,4 @@ Undo: `ctrl-shift-l` back to the person's previous layout (or the block's `mod` 
 - `table.csv` shows 500 rows × 5 columns with the header fixed while scrolling; `data.json` opens and closes rows, alt-click does a branch; `broken.json` shows its parse error and source.
 - Editing an open file reloads it while keeping Raw or the zoom.
 - The ⋯ menu's actions work, and a click on the name or folder copies it.
-- With the Files panel patched (Install), a click on a file opens it here and a click on a folder still opens the folder.
+- With the Files panel patched (Install), a click on a file opens it here and a click on a folder still opens the folder. While the preview tab is shown, the panel's tree still lists the terminal's folder, with the same folders open, not the space's starting folder.
