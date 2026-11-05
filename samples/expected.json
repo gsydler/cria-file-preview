@@ -3,17 +3,18 @@
     "viewer": "markdown",
     "facts": {
       "headings": ["cria-file-preview-samples", "contents", "markdown-links", "images", "every-sample"],
-      "images": 4,
+      "images": 5,
       "webImages": 1,
       "missingFiles": ["img/missing.png"],
-      "unresolvedAnchors": ["nowhere"]
+      "unresolvedAnchors": ["nowhere"],
+      "refused": ["//elsewhere/share/notes.md", "//elsewhere/share/x.png"]
     },
     "visible": [
       "Header: README.md, its folder, a size in KB, the ToC icon, Preview | Raw with Preview on, the ⋯ button",
       "A bar above the document: \"1 web image not loaded · Load them\"",
       "Rendered Markdown: headings, the Contents list as links, a code block, the Kind | Viewer table",
       "The blue SVG with an orange circle and the word SVG, drawn inline",
-      "A chip \"Image: gone (not found)\" and a chip \"Image: badge (on the web)\""
+      "A chip \"Image: gone (not found)\", a chip \"Image: badge (on the web)\", and on Windows a chip \"Image: elsewhere (Can't open links to another computer)\""
     ],
     "manual": [
       { "do": "Click the ToC icon, then \"Images\" in the table of contents", "expect": "A 240px column of headings on the left; the document shows from Images, with a bar \"↑ Showing from “Images” · show the whole document\"" },
@@ -23,6 +24,7 @@
       { "do": "Click ←", "expect": "Back on README.md; the ← is gone" },
       { "do": "Click the PNG picture", "expect": "sample.pdf opens in the same preview" },
       { "do": "Click \"Load them\"", "expect": "The bar goes; the badge loads or says \"(couldn't load)\"" },
+      { "do": "On Windows, click \"A link to another computer\"", "expect": "A warning \"Can't open this link\"; the view stays" },
       { "do": "Click \"The Herdr website\"", "expect": "herdr.dev opens in the browser" },
       { "do": "Click Raw", "expect": "The Markdown source with line numbers and colors" }
     ]
@@ -93,18 +95,30 @@
     "viewer": "json",
     "facts": { "valid": true, "keys": 7 },
     "visible": [
-      "A tree: the root open with its 7 keys, ▸ on nested and list, ▾ on tags",
+      "A tree: the root open with its 7 keys, ▾ on tags, nested and list, ▸ on nested's deep",
       "Toolbar: the expand icon and Tree | Raw"
     ],
     "manual": [
-      { "do": "Alt-click the nested row", "expect": "nested opens all the way down to \"leaf\": \"found\"" },
+      { "do": "Alt-click the nested row twice", "expect": "The first closes nested; the second opens it all the way down to \"leaf\": \"found\"" },
       { "do": "Click the expand icon, then the collapse icon", "expect": "Everything opens, then everything closes but the root" }
     ]
+  },
+  "bom.json": {
+    "viewer": "json",
+    "facts": { "valid": true, "keys": 2, "bom": true },
+    "visible": ["A tree with the root open and its 2 keys, and no \"Invalid JSON\" in the toolbar"],
+    "manual": []
   },
   "broken.json": {
     "viewer": "json",
     "facts": { "valid": false },
     "visible": ["Toolbar: \"Invalid JSON: …\" in red", "The source with line numbers"],
+    "manual": []
+  },
+  "notutf8.txt": {
+    "viewer": "code",
+    "facts": { "language": "txt" },
+    "visible": ["The body says: Binary or non-UTF-8 file · no text preview"],
     "manual": []
   },
   "code.js": {

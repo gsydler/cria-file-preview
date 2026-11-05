@@ -1,0 +1,6 @@
+﻿{
+  "note": "Starts with a byte-order mark, as Notepad and Excel write it.",
+  "opens": {
+    "as": "a tree"
+  }
+}

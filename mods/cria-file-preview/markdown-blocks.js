@@ -6,10 +6,17 @@
 // and reference definitions ([id]: url) are repeated in every text block so a
 // reference link still resolves when its definition sits in another block.
 // Pure, so node --test covers it.
+import { GONE } from "./text-file.js";
 
 const IMAGE = /\[!\[([^\]]*)\]\(\s*<?([^)\s>]+)>?(?:\s+"[^"]*")?\s*\)\]\(\s*<?([^)\s>]+)>?\s*\)|!\[([^\]]*)\]\(\s*<?([^)\s>]+)>?(?:\s+"[^"]*")?\s*\)/g;
 const DEFINITION = /^ {0,3}\[[^\]\n]+\]:[ \t]*\S.*$/gm;
 const HEADING = /^ {0,3}(#{1,6})[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$/;
+
+/** Why an image block isn't drawn. `web`: the document's "ask", "loading" or "loaded". */
+export function imageNote({ url, failed }, web) {
+  if (url) return web === "loading" ? "loading…" : web === "loaded" ? "couldn't load" : "on the web";
+  return !failed || failed === GONE ? "not found" : failed;
+}
 
 // GitHub's anchor for a heading: lower case, punctuation dropped, spaces to dashes.
 export const slugify = (title) => title.toLowerCase().replace(/[`*_~]|<[^>]*>/g, "").replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")

@@ -5,7 +5,7 @@ import { div } from "gpui-kit";
 import { v_flex } from "gpui-base";
 import { props, theme, openOverlay, closeOverlay, notify, exec, home, window } from "herdr";
 import { openInEditor } from "./editor.js";
-import { dirname, relativePath } from "./links.js";
+import { dirname, native, relativePath } from "./paths.js";
 import { systemOf, commands, revealLabel } from "./platform.js";
 
 const ROW = 30;
@@ -47,7 +47,7 @@ export class FileMenu {
     return v_flex().id("file-menu").w_full().p(6).gap(2).bg(t.popover).text_color(t.foreground)
       .children(opens)
       .when(opens.length > 0, (el) => el.child(div().h(1).mx(6).my(2).bg(t.border)))
-      .child(item("path", "Copy path", (cx) => copy(cx, this.system === "windows" ? file.replaceAll("/", "\\") : file, "Path")))
+      .child(item("path", "Copy path", (cx) => copy(cx, native(file, this.system), "Path")))
       .child(item("relative", "Copy relative path", (cx) => copy(cx, this.relative, "Relative path")));
   }
 }

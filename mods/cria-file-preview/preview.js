@@ -5,22 +5,25 @@
 // the name or the full path) and its size, the viewer's own controls, and the ⋯ menu.
 import { div } from "gpui-kit";
 import { v_flex, h_flex } from "gpui-base";
-import { props, theme, notify, watchFolder, shared, setShared, exec } from "herdr";
+import { props, theme, notify, watchFolder, shared, setShared, exec, window } from "herdr";
 import { viewerFor, basename } from "./kinds.js";
-import { dirname } from "./links.js";
+import { dirname, native, localPath, samePath, changedFile } from "./paths.js";
 import { VIEWERS } from "./viewers/index.js";
 import { openMenu } from "./menu.js";
 import { iconButton } from "./viewers/controls.js";
 import { previewId, MOVED } from "./open-file.js";
 import { formatSize } from "./size.js";
+import { programs } from "./programs.js";
+import { systemOf } from "./platform.js";
 
 export class Preview {
   init(_props, cx) {
     const { file, on = null } = props() ?? {};
     this.on = on;
+    this.system = systemOf(window()?.platform, on);
     this.history = [];
     this.size = { width: 900, height: 700 };
-    this.show(file, cx);
+    this.show(file && localPath(file, this.system), cx);
   }
 
   env() {
@@ -37,7 +40,7 @@ export class Preview {
     const viewer = this.viewer = VIEWERS[viewerFor(file)];
     const env = this.env(), loading = this.loading = {};
     cx.spawn(async (cx) => {
-      const r = await exec("sh", ["-c", 'wc -c < "$1"', "size", file], { on: this.on }).catch(() => null);
+      const r = await exec(...programs(this.system).bytes(file), { on: this.on }).catch(() => null);
       if (this.loading === loading) { this.bytes = r?.code === 0 ? Number(r.stdout.trim()) : null; cx.notify(); }
     });
     cx.spawn(async (cx) => {
@@ -59,7 +62,7 @@ export class Preview {
       try {
         while (this.watching === token) {
           const changed = await watchFolder(dirname(file));
-          if (this.watching === token && changed.includes(file)) this.show(file, cx, true);
+          if (this.watching === token && changedFile(changed, file)) this.show(file, cx, true);
         }
       } catch {}
     });
@@ -80,8 +83,8 @@ export class Preview {
 
   // Tells files-extended what this preview shows now, so it isn't reused for the file it opened with.
   moved() {
-    const id = previewId(props()?.file, this.on);
-    setShared(MOVED, { ...(shared(MOVED) ?? {}), [id]: this.file });
+    const opened = props()?.file, id = previewId(opened, this.on);
+    setShared(MOVED, { ...(shared(MOVED) ?? {}), [id]: samePath(this.file, opened) ? opened : this.file });
   }
 
   release() {
@@ -93,7 +96,7 @@ export class Preview {
 
   // The name or the folder, which a click copies: the name, or the file's full path.
   copier(id, label, what, t) {
-    const text = what === "name" ? basename(this.file ?? "") : this.file ?? "";
+    const text = what === "name" ? basename(this.file ?? "") : native(this.file ?? "", this.system);
     return div().id(id).min_w(0).truncate().cursor_pointer().hover((s) => s.text_color(t.accent))
       .tooltip(what === "name" ? "Copy the file name" : "Copy the full path")
       .on_click((_e, cx) => {
@@ -111,7 +114,7 @@ export class Preview {
         .when(this.history.length > 0, (el) => el.child(control("cria-file-preview-back", "←", `Back to ${basename(this.history.at(-1))}`, (_e, cx) => this.back(cx))))
         .child(h_flex().flex_1().min_w(0).gap(8).items_center().pl(this.history.length ? 0 : 4)
           .child(this.copier("cria-file-preview-name", basename(this.file ?? ""), "name", t).flex_none().max_w(320).font_semibold())
-          .child(this.copier("cria-file-preview-path", this.file ? dirname(this.file) : "", "path", t).flex_shrink(1).text_size(12).text_color(t.dim))
+          .child(this.copier("cria-file-preview-path", this.file ? native(dirname(this.file), this.system) : "", "path", t).flex_shrink(1).text_size(12).text_color(t.dim))
           .when(this.bytes != null, (el) => el.child(div().flex_none().text_size(12).text_color(t.dim).child(formatSize(this.bytes))))
           .child(div().flex_1()))
         .when(Boolean(state && viewer?.toolbar), (el) => el.child(viewer.toolbar(state, env)))

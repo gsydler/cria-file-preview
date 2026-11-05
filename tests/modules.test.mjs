@@ -1,7 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { viewerFor, languageOf, extension, basename } from "../mods/cria-file-preview/kinds.js";
-import { resolveLink, normalize, dirname } from "../mods/cria-file-preview/links.js";
+import { resolveLink } from "../mods/cria-file-preview/links.js";
+import { normalize, dirname } from "../mods/cria-file-preview/paths.js";
 import { editorCommand } from "../mods/cria-file-preview/editor-command.js";
 import { openCommand } from "../mods/cria-file-preview/open-file.js";
 
@@ -61,8 +62,9 @@ test("openCommand: tab by default, splits on request", () => {
   assert.equal(openCommand({ file: "/r/a.md", mode: "bogus" })[0], "tab.new");
 });
 
-import { splitBlocks, slugify } from "../mods/cria-file-preview/markdown-blocks.js";
+import { splitBlocks, slugify, imageNote } from "../mods/cria-file-preview/markdown-blocks.js";
 import { svgSize } from "../mods/cria-file-preview/svg-size.js";
+import { GONE, withoutBom, readFailure, tooLong, wholeLines } from "../mods/cria-file-preview/text-file.js";
 
 test("splitBlocks: text and images in order, linked images keep their link", () => {
   assert.deepEqual(splitBlocks("# T\n\n![logo](img/a.png)\n\nafter\n"), [
@@ -81,6 +83,49 @@ test("splitBlocks: reference definitions repeat in every text block", () => {
   const blocks = splitBlocks("see [docs][d]\n![a](a.png)\nmore\n\n[d]: https://x\n");
   assert.equal(blocks.length, 3);
   for (const b of blocks.filter((b) => b.text !== undefined)) assert.match(b.text, /\[d\]: https:\/\/x/);
+});
+
+test("svgSize: text with no svg tag has no size, so a fake download isn't kept", () => {
+  assert.deepEqual(svgSize("this is not a picture"), { width: 0, height: 0 });
+  assert.deepEqual(svgSize(""), { width: 0, height: 0 });
+  assert.deepEqual(svgSize("<svg>"), { width: 300, height: 150 });
+});
+
+test("svgSize: a prefixed svg tag counts", () => {
+  assert.deepEqual(svgSize('<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg" width="10" height="5">'), { width: 10, height: 5 });
+  assert.deepEqual(svgSize('<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg">'), { width: 300, height: 150 });
+});
+
+test("imageNote: why an image isn't drawn", () => {
+  assert.equal(imageNote({ url: "https://x/a.png" }, "ask"), "on the web");
+  assert.equal(imageNote({ url: "https://x/a.png" }, "loading"), "loading…");
+  assert.equal(imageNote({ url: "https://x/a.png" }, "loaded"), "couldn't load");
+  assert.equal(imageNote({}, "ask"), "not found");
+  assert.equal(imageNote({ failed: GONE }, "ask"), "not found");
+  assert.equal(imageNote({ failed: "Can't open links to another computer" }, "ask"), "Can't open links to another computer");
+});
+
+test("withoutBom: Notepad's and Excel's first character goes", () => {
+  const bom = String.fromCharCode(0xFEFF);
+  assert.equal(withoutBom(bom + '{"a":1}'), '{"a":1}');
+  assert.equal(withoutBom("plain"), "plain");
+  assert.equal(withoutBom("a" + bom + "b"), "a" + bom + "b");
+});
+
+test("readFailure: what Herdr's read errors mean to the person", () => {
+  assert.equal(readFailure("`herdr.readTextFile`: Text file exceeds 1 MiB"), "This file is over 1 MiB, too large to preview");
+  assert.equal(readFailure("`herdr.readTextFile`: stream did not contain valid UTF-8"), "Binary or non-UTF-8 file · no text preview");
+  assert.equal(readFailure("something else"), "something else");
+});
+
+test("tooLong: only the size limit leaves a head to read", () => {
+  assert.equal(tooLong("`herdr.readTextFile`: Text file exceeds 1 MiB"), true);
+  assert.equal(tooLong("stream did not contain valid UTF-8"), false);
+});
+
+test("wholeLines: a cut text ends on its last whole line", () => {
+  assert.equal(wholeLines("a,b\nc,d\ne,"), "a,b\nc,d\n");
+  assert.equal(wholeLines("no line end"), "no line end");
 });
 
 test("svgSize: attributes, else viewBox, else the default", () => {
@@ -181,7 +226,7 @@ test("formatSize", () => {
   assert.equal(formatSize(null), "");
 });
 
-import { relativePath } from "../mods/cria-file-preview/links.js";
+import { relativePath } from "../mods/cria-file-preview/paths.js";
 
 test("relativePath: from the repo root, else ~/, else absolute", () => {
   assert.equal(relativePath("/Users/g/repo/docs/a.md", "/Users/g/repo", "/Users/g"), "docs/a.md");
@@ -213,8 +258,9 @@ test("platform commands: open and reveal per system, none for a remote file", ()
   assert.equal(revealLabel("windows"), "Show in Explorer");
 });
 
-test("platform commands: Windows quotes paths into PowerShell with single quotes", () => {
+test("platform commands: Windows passes paths to PowerShell as character codes", () => {
   const [program, args] = commands("windows", new Set()).open("C:/it's/b.md");
+  const codes = [..."C:\\it's\\b.md"].map((c) => c.charCodeAt(0)).join(",");
   assert.equal(program, "powershell");
-  assert.ok(args.at(-1).endsWith(" 'C:\\it''s\\b.md'"));
+  assert.ok(args.at(-1).endsWith(` (-join [char[]]@(${codes}))`));
 });
