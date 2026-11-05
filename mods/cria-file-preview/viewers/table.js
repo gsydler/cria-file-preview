@@ -5,7 +5,7 @@ import { v_flex, h_flex, v_virtual_list, Scrollbar } from "gpui-base";
 import { theme, settings } from "herdr";
 import { extension } from "../kinds.js";
 import { delimiterOf, parseDelimited, columnWidths } from "../delimited.js";
-import { readText, codeState, codeView } from "./text.js";
+import { readLongText, codeState, codeView } from "./text.js";
 import { rawToggle } from "./controls.js";
 
 const ROW = 26, NUMBER = 52, LIMIT = 100000;
@@ -14,10 +14,10 @@ let views = 0;
 export default {
   id: "table",
   async load(file, env, previous) {
-    const text = await readText(file, env.on);
+    const { text, cut } = await readLongText(file, env.on);
     const { rows, truncated } = parseDelimited(text, delimiterOf(extension(file), text), LIMIT + 1);
     const raw = previous?.raw ?? false;
-    return { text, header: rows[0] ?? [], body: rows.slice(1), truncated, widths: columnWidths(rows),
+    return { text, header: rows[0] ?? [], body: rows.slice(1), truncated: truncated || cut, widths: columnWidths(rows),
       raw, editor: raw ? codeState(text, "text") : null, id: `cria-file-preview-table-${++views}` };
   },
 

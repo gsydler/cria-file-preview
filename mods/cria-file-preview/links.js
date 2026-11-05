@@ -3,37 +3,37 @@
 //   { file, anchor? }  a local file, absolute, to open in this preview, at a heading
 //   { anchor } a heading in this page
 //   { error } anything else
+import { dirname, isWindows, normalize } from "./paths.js";
 
-export function normalize(path) {
-  const out = [];
-  for (const part of path.split("/")) {
-    if (!part || part === ".") continue;
-    if (part === "..") out.pop(); else out.push(part);
-  }
-  return "/" + out.join("/");
+const DRIVE = /^[a-z]:[\\/]/i;
+
+// `path` made absolute against the document it's in, the document deciding the system.
+function absolute(from, path) {
+  const base = normalize(from), inside = `${dirname(base).replace(/\/$/, "")}/${path}`;
+  if (!isWindows(base)) return path.startsWith("/") ? path.replace(/^\/+/, "/") : inside;
+  if (path.startsWith("//") || DRIVE.test(path)) return path;
+  return path.startsWith("/") ? (base.match(/^[a-z]:|^\/\/[^/]+\/[^/]+/i)?.[0] ?? "") + path : inside;
 }
-export const dirname = (path) => normalize(path).replace(/\/[^/]*$/, "") || "/";
 
 export function resolveLink(from, href) {
   const link = String(href ?? "").trim();
   if (!link) return { error: "Empty link" };
   if (link.startsWith("#")) return { anchor: link.slice(1) };
   if (/^(https?|mailto):/i.test(link)) return { url: link };
+  const windows = isWindows(from), fileUrl = /^file:\/\//i.test(link);
   let path = link;
-  if (/^file:\/\//i.test(path)) path = path.replace(/^file:\/\/(localhost)?/i, "");
-  else if (/^[a-z][a-z\d+.-]*:/i.test(path)) return { error: `Can't open ${link.split(":")[0]}: links here` };
+  if (fileUrl) path = path.replace(/^file:\/\/(localhost(?=\/|$))?/i, "");
+  else if (!(windows && DRIVE.test(path)) && /^[a-z][a-z\d+.-]*:/i.test(path)) return { error: `Can't open ${link.split(":")[0]}: links here` };
   const anchor = path.match(/#(.*)$/)?.[1];
   path = path.replace(/[?#].*$/, "");
   if (!path) return { anchor: anchor ?? "" };
   try { path = decodeURIComponent(path); } catch { return { error: "This link has an invalid path" }; }
-  const file = normalize(path.startsWith("/") ? path : `${dirname(from)}/${path}`);
+  if (fileUrl && windows) path = path.replace(/^\/(?=[a-z]:[\\/])/i, "");
+  if (fileUrl && !path.startsWith("/") && !DRIVE.test(path)) path = `//${path}`; // file://host/…
+  if (windows) path = path.replaceAll("\\", "/");
+  const file = normalize(absolute(from, path));
+  // Images load on open, and Windows answers a share with the person's credentials.
+  const host = (full) => full.match(/^\/\/([^/]*)/)?.[1].toLowerCase();
+  if (file.startsWith("//") && host(file) !== host(normalize(from))) return { error: "Can't open links to another computer" };
   return anchor ? { file, anchor } : { file };
-}
-
-/** `file` from the repo root when it has one, else from the home folder as ~/…, else as is. */
-export function relativePath(file, root, home) {
-  // Windows mixes separators: git prints C:/x, a folder comes as C:\x.
-  [file, root, home] = [file, root, home].map((path) => path?.replaceAll("\\", "/"));
-  const under = (base) => base && file.startsWith(base.replace(/\/$/, "") + "/") ? file.slice(base.replace(/\/$/, "").length + 1) : null;
-  return under(root) ?? (under(home) !== null ? `~/${under(home)}` : file);
 }

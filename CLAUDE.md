@@ -8,13 +8,15 @@ Mods run in Herdr's own JavaScript runtime, not Node: no DOM, no Node APIs, no `
 
 ## Checks
 
-- `node --test` and `node scripts/check-herdr.mjs`: both run in CI, the tests on Linux (with poppler-utils) and macOS. In Claude Code run `node --test` outside the sandbox: the sandbox stops osascript from saving the PDF test's pages.
+- `node --test` and `node scripts/check-herdr.mjs`: both run in CI, the tests on Linux (with poppler-utils), macOS and Windows (with Git's tools off PATH, as Herdr has them). In Claude Code run `node --test` outside the sandbox: the sandbox stops osascript from saving the PDF test's pages.
 - `herdr-app check mods/cria-file-preview`: loads and renders the mod; needs the app running. It writes `jsconfig.json` and `*.d.ts` into the mod folder (gitignored).
+- `smoke-test` skill: the running app against `samples/expected.json`. `herdr-app check` stops at the first render, so `exec`, `watchFolder` and async loads prove themselves only here.
+- On Windows a terminal's PATH has Git's tools and Herdr's lacks them: run a local `node --test` with Git off PATH, as CI does.
 - After a change under `mods/`, and before tagging a release, run the `release-check` skill.
 
 ## Where logic goes
 
-Logic sits in modules marked "Pure, so node --test covers it" (`kinds.js`, `links.js`, `delimited.js`, `json-tree.js`, …) and gets a test in `tests/`. The viewers and `preview.js` only draw and call `herdr`. A new viewer: `viewers/<id>.js`, registered in `viewers/index.js`, its extensions mapped in `kinds.js`.
+Logic sits in modules marked "Pure, so node --test covers it" (`kinds.js`, `paths.js`, `links.js`, `delimited.js`, `json-tree.js`, …) and gets a test in `tests/`. The viewers and `preview.js` only draw and call `herdr`. A program that differs per system lives in the table in `programs.js` (the ⋯ menu's in `platform.js`) as `[program, args]`, and runs for real in `tests/programs.test.mjs`; what opens a window or needs the network is tested for its form in `tests/windows.test.mjs`. A new viewer: `viewers/<id>.js`, registered in `viewers/index.js`, its extensions mapped in `kinds.js`.
 
 ## Standalone, with one public contract
 

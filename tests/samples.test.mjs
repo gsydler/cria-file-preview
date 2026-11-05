@@ -3,20 +3,22 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
-import { join, relative } from "node:path";
+import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { viewerFor, languageOf, extension } from "../mods/cria-file-preview/kinds.js";
 import { resolveLink } from "../mods/cria-file-preview/links.js";
 import { splitBlocks } from "../mods/cria-file-preview/markdown-blocks.js";
 import { delimiterOf, parseDelimited } from "../mods/cria-file-preview/delimited.js";
 import { svgSize } from "../mods/cria-file-preview/svg-size.js";
+import { withoutBom } from "../mods/cria-file-preview/text-file.js";
 
 const SAMPLES = fileURLToPath(new URL("../samples/", import.meta.url));
 const EXPECTED = JSON.parse(readFileSync(join(SAMPLES, "expected.json"), "utf8"));
 const read = (file) => readFileSync(join(SAMPLES, file), "utf8");
+const fromSamples = (path) => relative(SAMPLES, path).replaceAll(sep, "/");
 
 const files = (dir) => readdirSync(dir, { withFileTypes: true })
-  .flatMap((e) => e.isDirectory() ? files(join(dir, e.name)) : [relative(SAMPLES, join(dir, e.name))])
+  .flatMap((e) => e.isDirectory() ? files(join(dir, e.name)) : [fromSamples(join(dir, e.name))])
   .filter((f) => f !== "expected.json");
 
 const headings = (file) => splitBlocks(read(file)).filter((b) => b.heading).map((b) => b.heading.slug);
@@ -39,11 +41,13 @@ for (const [file, { viewer, facts }] of Object.entries(EXPECTED)) {
       // Every link and image: a local file exists, an anchor names a heading, unless listed as broken on purpose.
       const targets = [...text.matchAll(/\]\(\s*<?([^)\s>]+)/g)].map((m) => m[1]);
       const missing = new Set(), unresolved = new Set();
+      for (const href of facts.refused ?? []) assert.equal(resolveLink(`C:\\samples\\${file}`, href).error, "Can't open links to another computer", href);
       for (const href of targets) {
+        if (facts.refused?.includes(href)) continue;
         const to = resolveLink(join(SAMPLES, file), href);
         assert.equal(to.error, undefined, `${href}: ${to.error}`);
         if (to.url) continue;
-        const target = to.file ? relative(SAMPLES, to.file) : file;
+        const target = to.file ? fromSamples(to.file) : file;
         if (to.file && !existsSync(to.file)) { missing.add(target); continue; }
         if (to.anchor && !headings(target).includes(to.anchor)) unresolved.add(to.anchor);
       }
@@ -61,7 +65,8 @@ for (const [file, { viewer, facts }] of Object.entries(EXPECTED)) {
 
     if (viewer === "json") {
       let value = null, valid = true;
-      try { value = JSON.parse(read(file)); } catch { valid = false; }
+      if (facts.bom) assert.equal(read(file)[0], String.fromCharCode(0xFEFF), "the sample keeps its byte-order mark");
+      try { value = JSON.parse(withoutBom(read(file))); } catch { valid = false; }
       assert.equal(valid, facts.valid);
       if (facts.keys !== undefined) assert.equal(Object.keys(value).length, facts.keys);
     }

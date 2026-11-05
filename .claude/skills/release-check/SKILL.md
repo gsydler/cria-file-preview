@@ -29,7 +29,7 @@ Done when both commands pass and every AGENTS.md rule above is accounted for as 
 
 Read every changed line against each rule. Done when each file in the change set has been held against all of them, and each finding names `file:line`.
 
-- **Programs:** `exec` gets the program and an argv array. A shell script takes values only as positional `"$1"`, `"$2"`…, never spliced into the script text.
+- **Programs:** `exec` gets the program and an argv array. A shell script takes values only as positional `"$1"`, `"$2"`…, never spliced into the script text. PowerShell's `-Command` takes no argv, so a value reaches it only through `powershell` in `platform.js`, as character codes.
 - **Network:** nothing is fetched on open. Web content loads only after a click, https only, with size and time caps, and only the expected type is kept.
 - **Files:** the mod writes only under `data/cria-file-preview/` in the Herdr home, and checks that paths a helper returns stay there (as `pdf-render.js` does).
 - **Links:** only `http`, `https` and `mailto` leave Herdr; other schemes are refused.

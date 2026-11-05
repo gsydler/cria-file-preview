@@ -15,6 +15,7 @@ One file per kind cria-file-preview shows. Open this folder in the Files panel a
 - [A missing heading](#nowhere), which says so
 - [The Herdr website](https://herdr.dev), opened in the browser
 - [A reference-style link][herdr] whose definition sits at the end
+- [A link to another computer](//elsewhere/share/notes.md), refused on Windows
 
 ```js
 // Code in Markdown stays as written, ![not an image](img/logo.svg) included.
@@ -36,6 +37,8 @@ A PNG that links to the PDF (click it): [![picture](img/picture.png)](sample.pdf
 
 A missing image: ![gone](img/missing.png)
 
+An image on another computer, refused on Windows: ![elsewhere](//elsewhere/share/x.png)
+
 A web image, shown as a link: ![badge](https://img.shields.io/badge/file--preview-sample-8aadf4.svg)
 
 ## Every sample
@@ -52,7 +55,9 @@ A web image, shown as a link: ![badge](https://img.shields.io/badge/file--previe
 | [table.csv](table.csv) | table | quoted commas, 500 rows, Table / Raw |
 | [table.tsv](table.tsv) | table | tabs |
 | [data.json](data.json) | json | open and close rows, Expand all, Collapse |
+| [bom.json](bom.json) | json | starts with a byte-order mark, as Notepad writes it, and still opens as a tree |
 | [broken.json](broken.json) | json | the parse error, Raw |
+| [notutf8.txt](notutf8.txt) | code | Latin-1 text, which says it can't be previewed |
 | [code.js](code.js) | code | syntax colours |
 | [notes.txt](notes.txt) | code | plain text |
 

@@ -13,7 +13,7 @@ import { theme, notify } from "herdr";
 import { resolveLink } from "../links.js";
 import { readText, codeState, codeView } from "./text.js";
 import { rawToggle, iconButton } from "./controls.js";
-import { splitBlocks } from "../markdown-blocks.js";
+import { splitBlocks, imageNote } from "../markdown-blocks.js";
 import { stageImage, fetchImage } from "../media.js";
 
 let views = 0;
@@ -55,7 +55,8 @@ export default {
       if (!block.image) continue;
       const to = resolveLink(file, block.image.src);
       if (to.url) block.image.url = to.url;
-      else if (to.file && !env.on) block.image.picture = await stageImage(to.file).catch(() => null);
+      else if (to.file && !env.on) block.image.picture = await stageImage(to.file).catch((e) => { block.image.failed = String(e?.message ?? e); return null; });
+      else if (to.error) block.image.failed = to.error;
     }
     const raw = previous?.raw ?? false;
     const state = { text, blocks, raw, editor: raw ? codeState(text, "markdown") : null, from: null,
@@ -82,11 +83,11 @@ export default {
     if (state.raw) return codeView(state.editor);
     const t = theme(), column = Math.max(120, Math.min(920, env.size.width - (state.contents ? 240 : 0)) - 80);
     const start = state.from ? state.blocks.findIndex((b) => b.heading?.slug === state.from) : 0;
-    const picture = ({ alt, link, url, picture: p }, i) => {
-      const target = link ?? url;
+    const picture = (shown, i) => {
+      const { alt, link, url, picture: p } = shown, target = link ?? url;
       const el = p ? image(p.path).w(Math.min(p.width, column)).h(Math.min(p.width, column) * p.height / p.width)
         : div().px(8).py(4).rounded(6).bg(t.raised).text_size(12).text_color(url ? t.accent : t.dim)
-          .child(`Image: ${alt || "untitled"}${!url ? " (not found)" : state.web === "loading" ? " (loading…)" : state.web === "loaded" ? " (couldn't load)" : " (on the web)"}`);
+          .child(`Image: ${alt || "untitled"} (${imageNote(shown, state.web)})`);
       return div().id(`${state.id}-img-${i}`).py(6).when(Boolean(target), (d) => d.cursor_pointer().on_click((_e, cx) => follow(target, state, env, cx))).child(el);
     };
     const contents = v_flex().id(`${state.id}-contents`).w(240).h_full().flex_none().min_h(0).overflow_y_scrollbar().py(16).px(10).gap(1)

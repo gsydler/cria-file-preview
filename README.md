@@ -10,8 +10,9 @@ A [Herdr](https://herdr.dev) mod that previews a file in a tab or a split: Markd
 
 - Header: the file name (a click copies it), its folder (a click copies the full path) and its size.
 - Live reload: a file on this computer reloads when it changes on disk, keeping Raw, zoom and the open JSON branches.
+- Long files: code and tables show the first 4 MiB of a file over 1 MiB; Markdown and JSON say it's too large. A file that isn't UTF-8 says so.
 - Back: after following a link to another file, ← returns to the previous one.
-- The ⋯ menu: Open in editor (`$VISUAL` or `$EDITOR` from your login shell, wait flags dropped, else the default app), Open with default app, Reveal in Finder (Explorer on Windows, the containing folder on Linux), Copy path, Copy relative path (from the repo root, else `~/`).
+- The ⋯ menu: Open in editor (`$VISUAL` or `$EDITOR`, wait flags dropped, else the default app), Open with default app, Reveal in Finder (Explorer on Windows, the containing folder on Linux), Copy path, Copy relative path (from the repo root, else `~/`).
 - Files on another machine (a remote Herdr space) open in the text-based viewers. Images, PDFs and the open and reveal actions need the file on this computer.
 
 **The viewers**
@@ -49,8 +50,8 @@ or `pane.split` with the same `mod` and `props` for a split.
 
 Herdr asks you to know this before adding a mod:
 
-- **Runs programs:** `sh` (to measure a file and stage images), `sips` on macOS or `file` elsewhere (image sizes), `osascript` on macOS (PDF pages, through PDFKit) or `pdftoppm` and `pdfinfo` elsewhere, `git` (for the relative path), `curl` and `file` (web images, after your click), `find` (cache cleanup), your login shell (to read `$EDITOR`), your editor, and `open`, `xdg-open` or PowerShell for the ⋯ menu.
-- **Reaches the network** only when you click **Load them** on a Markdown file's web images: https only, at most 5 MB and 10 seconds each, kept only if the result is an image. Fetching them on open would tell their hosts who reads the document, and when. A web link you click opens in your browser.
+- **Runs programs:** on macOS and Linux, `sh` (to measure a file, read the start of a long one and stage images), `sips` or `file` (image sizes), `osascript` with PDFKit or `pdftoppm` and `pdfinfo` (PDF pages), `curl` and `file` (web images, after your click), `mv`, `rm` and `find` (in its cache folder only), your login shell (to read `$EDITOR`), and `open` or `xdg-open` for the ⋯ menu. On Windows, PowerShell does all of that, with `curl.exe` for web images and Windows' own PDF renderer, and it loads your PowerShell profile to read `$EDITOR`. Everywhere, `git` (for the relative path) and your editor.
+- **Reaches the network** only when you click **Load them** on a Markdown file's web images: https only, at most 5 MB and 10 seconds each, kept only if the result is an image. Fetching them on open would tell their hosts who reads the document, and when. A web link you click opens in your browser. A Markdown link or image pointing at another computer's shared folder is refused, because Windows would connect to it and offer your credentials.
 - **Reads** the file you open, and the local images a Markdown file shows, wherever they are.
 - **Writes** only to `~/.config/herdr-app/data/cria-file-preview/`: copies of the images it shows and rendered PDF pages, deleted after two weeks.
 
@@ -58,7 +59,7 @@ Herdr asks you to know this before adding a mod:
 
 - **macOS:** everything.
 - **Linux:** everything; the tests run the image and PDF scripts on Linux in CI. PDFs need `poppler-utils` (`pdftoppm`, `pdfinfo`); without it the PDF viewer says so. TIFF and HEIC images show an error, since `file` reports no size for them.
-- **Windows:** untested. Images and PDFs need `sh`, which Windows lacks, and the ⋯ menu's PowerShell commands have never run there.
+- **Windows:** everything, with nothing to install: PowerShell and Windows' own PDF renderer do the work, and the tests run there in CI. WebP and HEIC images depend on the Windows image extensions installed.
 
 ## Development
 

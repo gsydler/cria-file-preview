@@ -1,7 +1,7 @@
 // PDF: every page, one under the other, in a virtual list (the one view Herdr
 // scrolls from code), so ‹ › and "Go to" can jump to a page. Pages render in
 // batches, starting from the one jumped to; a page not drawn yet holds its place.
-// Files on this computer only: PDFKit renders them here.
+// Files on this computer only: they render here.
 import { div, image } from "gpui-kit";
 import { v_flex, h_flex, v_virtual_list, Scrollbar, VirtualListScrollHandle, InputState, Input } from "gpui-base";
 import { theme } from "herdr";
