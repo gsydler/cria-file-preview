@@ -3,7 +3,6 @@ import assert from "node:assert/strict";
 import { viewerFor, languageOf, extension, basename } from "../mods/cria-file-preview/kinds.js";
 import { resolveLink } from "../mods/cria-file-preview/links.js";
 import { normalize, dirname } from "../mods/cria-file-preview/paths.js";
-import { editorCommand } from "../mods/cria-file-preview/editor-command.js";
 import { openCommand } from "../mods/cria-file-preview/open-file.js";
 
 test("viewerFor picks by extension, code by default", () => {
@@ -46,13 +45,6 @@ test("resolveLink: web, mail, anchors, others", () => {
   assert.deepEqual(resolveLink("/r/a.md", "#usage"), { anchor: "usage" });
   assert.ok(resolveLink("/r/a.md", "javascript:alert(1)").error);
   assert.ok(resolveLink("/r/a.md", "").error);
-});
-
-test("editorCommand: $EDITOR without wait flags, else open", () => {
-  assert.deepEqual(editorCommand("zed --wait", "/a/b.md"), ["zed", "/a/b.md"]);
-  assert.deepEqual(editorCommand("code -w", "/a/b.md"), ["code", "/a/b.md"]);
-  assert.deepEqual(editorCommand("", "/a/b.md"), ["open", "/a/b.md"]);
-  assert.deepEqual(editorCommand(undefined, "/a/b.md"), ["open", "/a/b.md"]);
 });
 
 test("openCommand: tab by default, splits on request", () => {

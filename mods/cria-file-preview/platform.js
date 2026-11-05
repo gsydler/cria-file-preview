@@ -4,6 +4,7 @@
 // files on another machine: no desktop to open them in, so no command at all.
 // A command is [program, args]; an action with no command on a system is hidden.
 import { dirname, native } from "./paths.js";
+import { editorCommand } from "./editor-command.js";
 
 export function systemOf(platform, on) {
   return on ? "remote" : platform;
@@ -51,15 +52,11 @@ const WINDOWS = {
   editor: (path) => withProfile(EDITOR, win(path)),
 };
 
-/**
- * The commands for `system`. `tools`: the optional programs found on this computer
- * (`xdg-open`). "editor" on macOS and Linux is true: editor.js asks the login shell
- * for $EDITOR there.
- */
+/** The commands for `system`. `tools`: the optional programs found on this computer (`xdg-open`). */
 export function commands(system, tools) {
   if (system === "windows") return WINDOWS;
-  if (system === "macos") return { editor: true, open: (p) => ["open", [p]], reveal: (p) => ["open", ["-R", p]] };
-  if (system === "linux") return { editor: true,
+  if (system === "macos") return { editor: (p) => editorCommand(p, "open"), open: (p) => ["open", [p]], reveal: (p) => ["open", ["-R", p]] };
+  if (system === "linux") return { editor: (p) => editorCommand(p, "xdg-open"),
     ...(tools.has("xdg-open") ? { open: (p) => ["xdg-open", [p]], reveal: (p) => ["xdg-open", [dirname(p)]] } : {}) };
   return {};
 }

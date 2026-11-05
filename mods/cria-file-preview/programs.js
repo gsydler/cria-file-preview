@@ -48,7 +48,8 @@ if (-not [IO.File]::Exists($out)) {
 }
 $name`;
 
-// `file --mime-type` for what the preview draws: the type of the bytes in $tmp.
+// `file --mime-type` for what the preview draws: the type of the bytes in $tmp. An SVG's
+// tag opens the document: one further in is a web page holding a picture.
 const SNIFF = String.raw`
 $bytes = [IO.File]::ReadAllBytes($tmp)
 $head = [BitConverter]::ToString($bytes, 0, [Math]::Min(12, $bytes.Length)).Replace('-', '').ToLower()
@@ -57,7 +58,7 @@ if ($head -match '^89504e47') { 'image/png' }
 elseif ($head -match '^ffd8ff') { 'image/jpeg' }
 elseif ($head -match '^47494638') { 'image/gif' }
 elseif ($head -match '^52494646.{8}57454250') { 'image/webp' }
-elseif ($text -match '<(?:[\w.-]+:)?svg\b') { 'image/svg+xml' }
+elseif ($text -match '^\uFEFF?(?s:\s|<\?xml.*?\?>|<!--.*?-->|<!doctype\s+svg[^>]*>)*<(?:[\w.-]+:)?svg\b') { 'image/svg+xml' }
 else { 'application/octet-stream' }`;
 
 // curl.exe ships with Windows.

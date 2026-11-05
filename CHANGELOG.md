@@ -22,6 +22,8 @@ Every change people using the mod would notice. The format follows [Keep a Chang
 - Paths on Windows: Markdown links and images, the folder in the header and Copy relative path now work with `\`, `/` or both, and with absolute `C:\` links.
 - UTF-8 files that start with a byte-order mark open normally, so such a JSON file shows as a tree instead of as invalid.
 - Open in editor on Windows handles an editor whose path has spaces, and finds `$EDITOR` set in your PowerShell profile.
+- Open in editor no longer does nothing on macOS or Linux when your login shell is slow to start.
+- An SVG whose tag has a prefix, like `<svg:svg>`, opens at its real size.
 
 ### Security
 

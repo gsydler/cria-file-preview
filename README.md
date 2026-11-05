@@ -59,7 +59,7 @@ Herdr asks you to know this before adding a mod:
 
 - **macOS:** everything.
 - **Linux:** everything; the tests run the image and PDF scripts on Linux in CI. PDFs need `poppler-utils` (`pdftoppm`, `pdfinfo`); without it the PDF viewer says so. TIFF and HEIC images show an error, since `file` reports no size for them.
-- **Windows:** everything, with nothing to install: PowerShell and Windows' own PDF renderer do the work, and the tests run there in CI. TIFF and HEIC images depend on the codecs installed.
+- **Windows:** everything, with nothing to install: PowerShell and Windows' own PDF renderer do the work, and the tests run there in CI. WebP and HEIC images depend on the Windows image extensions installed.
 
 ## Development
 

@@ -170,6 +170,16 @@ test("a failed PowerShell command reports one line, not its whole error record",
   assert.match(args.at(-1), /catch \{ \[Console\]::Error\.WriteLine\(\$_\.Exception\.Message\); exit 1 \}/);
 });
 
+test("editor off Windows: one process with the file as a value, since the menu's copy dies with its popup", () => {
+  for (const [system, opener] of [["macos", "open"], ["linux", "xdg-open"]]) {
+    const [program, args] = commands(system, new Set()).editor("/a b/$(x).md");
+    assert.equal(program, "sh");
+    assert.equal(args[0], "-c");
+    assert.ok(!args[1].includes("$(x)"));
+    assert.deepEqual(args.slice(2), ["editor", "/a b/$(x).md", opener]);
+  }
+});
+
 test("editor: one process that loads the profile, since the menu's copy dies with its popup", () => {
   const [, args] = commands("windows", new Set()).editor("C:/a.md");
   assert.ok(!args.includes("-NoProfile"), "PowerShell reads $EDITOR from the profile itself");

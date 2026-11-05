@@ -150,6 +150,26 @@ test("mime: an SVG, prefixed or not, is an image; an empty file isn't", windows,
   assert.doesNotMatch(type("html", "<html><body>svg</body></html>"), /^image\//);
 });
 
+test("mime: a page holding an SVG is a page", windows, () => {
+  const dir = mkdtempSync(join(tmpdir(), "cria-mime-")), type = (name, text) => {
+    writeFileSync(join(dir, name), text);
+    return run(P.mime(join(dir, name))).stdout.trim();
+  };
+  assert.doesNotMatch(type("a", "<!doctype html><html><body><svg width='1'/></body></html>"), /^image\//);
+  assert.doesNotMatch(type("b", "<div><svg width='1'/></div>"), /^image\//);
+  assert.doesNotMatch(type("c", "<!doctype html><svg width='1'/>"), /^image\//);
+});
+
+test("mime: what may come before an SVG's tag", windows, () => {
+  const dir = mkdtempSync(join(tmpdir(), "cria-mime-")), type = (name, text) => {
+    writeFileSync(join(dir, name), text);
+    return run(P.mime(join(dir, name))).stdout.trim();
+  };
+  assert.equal(type("a", "\n  <svg width='1'/>"), "image/svg+xml");
+  assert.equal(type("b", "<?xml version='1.0'?>\n<!-- drawn\n by hand -->\n<!DOCTYPE svg PUBLIC 'x' 'y'>\n<SVG width='1'/>"), "image/svg+xml");
+  assert.equal(type("c", `${String.fromCharCode(0xFEFF)}<svg width='1'/>`), "image/svg+xml");
+});
+
 for (const picture of ["picture.png", "picture.jpg", "picture.gif"]) {
   const [program, args] = P.size(join(SAMPLES, "img", picture));
   test(`size of ${picture} through ${program}`, { skip: !has(program) && `${program} isn't installed` }, () => {
@@ -226,3 +246,39 @@ for (const [form, value] of [["quoted", (p) => `"${p}" --wait`], ["unquoted", (p
     assert.equal(await opened(out), "C:\\some dir\\a.md");
   });
 }
+
+// A stand-in program that records its arguments. No space in its path: $EDITOR is split into words.
+function fakePosix(name) {
+  const dir = mkdtempSync(join(tmpdir(), "cria-editor-")), program = join(dir, name), out = join(dir, "opened.txt");
+  writeFileSync(program, `#!/bin/sh\nprintf '%s\\n' "$@" > "${out}"\n`);
+  chmodSync(program, 0o755);
+  return { dir, program, out };
+}
+
+const posix = { skip: PLATFORM === "windows" && "no sh on Herdr's Windows PATH" };
+const editorRun = (file, env) => run(commands(PLATFORM, new Set()).editor(file), { env: { ...process.env, SHELL: "/bin/sh", VISUAL: "", EDITOR: "", ...env } });
+
+test("editor: $VISUAL without its wait flags, the file whole", posix, () => {
+  const { program, out } = fakePosix("ed"), file = "/some dir/$(touch pwned) it's.md";
+  const r = editorRun(file, { VISUAL: `${program} --wait -x * -w` });
+  assert.equal(r.status, 0, r.stderr);
+  assert.deepEqual(readFileSync(out, "utf8").trim().split("\n"), ["-x", "*", file]);
+});
+
+test("editor: $EDITOR when $VISUAL is empty", posix, () => {
+  const { program, out } = fakePosix("ed");
+  assert.equal(editorRun("/a.md", { EDITOR: program }).status, 0);
+  assert.equal(readFileSync(out, "utf8").trim(), "/a.md");
+});
+
+test("editor: the system's opener when neither is set", posix, () => {
+  const { dir, out } = fakePosix(PLATFORM === "linux" ? "xdg-open" : "open");
+  assert.equal(editorRun("/a.md", { PATH: `${dir}:${process.env.PATH}` }).status, 0);
+  assert.equal(readFileSync(out, "utf8").trim(), "/a.md");
+});
+
+test("editor: a program that isn't there fails, for the toast", posix, () => {
+  const r = editorRun("/a.md", { VISUAL: "/no/such/editor" });
+  assert.notEqual(r.status, 0);
+  assert.match(r.stderr, /no\/such\/editor/);
+});
