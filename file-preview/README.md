@@ -30,7 +30,7 @@ A [Herdr](https://herdr.dev) mod that previews a file in a tab or a split: Markd
 
 ## Install
 
-Ask your agent in Herdr to add `herdr.dev/mods/gsydler/cria-file-preview`, or copy `mods/cria-file-preview/` into `~/.config/herdr-app/mods/`. Then check it:
+Ask your agent in Herdr to add `herdr.dev/mods/gsydler/herdr-cria--file-preview`, or copy `mods/cria-file-preview/` (in this folder) into `~/.config/herdr-app/mods/`. Then check it:
 
 ```sh
 herdr-app check ~/.config/herdr-app/mods/cria-file-preview
@@ -63,15 +63,17 @@ Herdr asks you to know this before adding a mod:
 
 ## Development
 
+This folder is one entry of the [herdr-cria](../README.md) repo, which holds the tooling shared by all its mods. Run these from the repo's top folder:
+
 ```sh
-node --test                        # the pure modules, every sample through them, the image and PDF scripts run for real
-node scripts/check-herdr.mjs       # Herdr's requirements for a shared mod (also in CI)
-herdr-app check mods/cria-file-preview   # loads and renders the mod; needs the app
-scripts/banner.sh                  # renders preview.png from assets/banner.html; needs Brave, Chrome or Chromium, and the internet for the fonts
+node --test 'file-preview/tests/*.test.mjs'   # the pure modules, every sample through them, the image and PDF scripts run for real
+node scripts/check-herdr.mjs file-preview      # Herdr's requirements for a shared mod (CI checks every entry)
+herdr-app check file-preview/mods/cria-file-preview   # loads and renders the mod; needs the app
+scripts/banner.sh file-preview                 # renders preview.png from assets/banner.html; needs Brave, Chrome or Chromium, and the internet for the fonts
 ```
 
-Changes are listed in [CHANGELOG.md](CHANGELOG.md).
+Changes are listed in [CHANGELOG.md](CHANGELOG.md); releases are tagged `file-preview/vX.Y.Z`.
 
 ## License
 
-[Apache-2.0](LICENSE). The banner's icons are from [Lucide](https://lucide.dev) (ISC; the notice is in `assets/banner.html`).
+[Apache-2.0](../LICENSE). The banner's icons are from [Lucide](https://lucide.dev) (ISC; the notice is in `assets/banner.html`).

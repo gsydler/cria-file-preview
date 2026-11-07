@@ -14,12 +14,20 @@ concurrency:
 
 jobs:
   test:
-    name: Tests (${{ matrix.os }})
-    # The image and PDF scripts differ per system: sips and PDFKit on macOS, file and poppler on Linux, PowerShell and Windows.Data.Pdf on Windows.
+    name: Tests (${{ matrix.mod }}, ${{ matrix.os }})
+    # One cell per mod folder and system: each runs only that folder's tests. A mod without tests stays
+    # out of the matrix; check-herdr still covers it. Anything one mod needs installed goes in its
+    # `include` entry (`apt` for Linux).
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+        mod: [file-preview]
+        include:
+          # The image and PDF scripts differ per system: sips and PDFKit on macOS, file and poppler on Linux,
+          # PowerShell and Windows.Data.Pdf on Windows.
+          - mod: file-preview
+            apt: poppler-utils
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     steps:
@@ -29,16 +37,16 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-      - if: runner.os == 'Linux'
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+      - if: runner.os == 'Linux' && matrix.apt
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ${{ matrix.apt }}
       - if: runner.os != 'Windows'
-        run: node --test
+        run: node --test '${{ matrix.mod }}/tests/*.test.mjs'
       # Herdr's PATH on Windows has none of Git's tools, whatever this runner has.
       - if: runner.os == 'Windows'
         shell: powershell
         run: |
           $env:PATH = ($env:PATH -split ';' | Where-Object { $_ -notmatch '\\Git\\' }) -join ';'
-          node --test
+          node --test '${{ matrix.mod }}/tests/*.test.mjs'
 
   herdr:
     name: Herdr mod requirements
@@ -51,5 +59,6 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-      # Static checks only: `herdr-app check` needs the desktop app and runs locally (release-check skill).
+      # Static checks of every mod folder at once. `herdr-app check` needs the desktop app and runs
+      # locally (release-check skill).
       - run: node scripts/check-herdr.mjs

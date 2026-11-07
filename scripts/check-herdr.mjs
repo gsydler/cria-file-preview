@@ -3,6 +3,10 @@
 // plus the mod rules a static read can catch. Runs in CI and in the release-check skill.
 // No dependencies. Exit 1 on any error; warnings print but pass.
 //
+// The repo holds several gallery entries: each top-level folder with a RECIPE.md is one,
+// listed as herdr.dev/mods/<OWNER>/<REPO>--<folder>. `node scripts/check-herdr.mjs` checks
+// them all; `node scripts/check-herdr.mjs file-preview` checks one.
+//
 // Herdr's own `herdr-app check <mod folder>` (loads and renders the mod) needs the app,
 // so it runs locally only, from the release-check skill.
 
@@ -12,6 +16,8 @@ import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+// The gallery builds each entry's address from these: a rename of the repo changes every one.
+const OWNER = "gsydler", REPO = "herdr-cria";
 const errors = [], warnings = [];
 const error = (msg) => errors.push(msg), warn = (msg) => warnings.push(msg);
 const read = (path) => readFileSync(join(ROOT, path), "utf8");
@@ -40,107 +46,164 @@ function tracked() {
   catch { return null; }
 }
 
-// --- Repo layout (herdr.dev/mods: mods/<name>/, RECIPE.md, preview.png, optional keys.json; no layouts/) ---
+// --- Repo layout (herdr.dev/mods: each entry a folder with mods/<name>/, RECIPE.md, preview.png,
+//     optional keys.json; no layouts/. One repo can hold several.) ---
 
-if (exists("layouts")) error("layouts/ found: a mod repo has only mods/<name>/ (a layout goes to herdr.dev/layouts)");
 if (!exists("LICENSE")) error("LICENSE missing");
-if (!exists("RECIPE.md")) error("RECIPE.md missing: herdr.dev/mods lists a mod from its recipe");
-if (!exists("preview.png")) error("preview.png missing: herdr.dev/mods shows it on the mod's card");
-if (exists("keys.json")) { try { JSON.parse(read("keys.json")); } catch (e) { error(`keys.json is not valid JSON: ${e.message}`); } }
+if (!exists("README.md")) warn("README.md missing: GitHub visitors land on it");
+// A RECIPE.md at the top would make the whole repo one more entry, at herdr.dev/mods/<OWNER>/<REPO>.
+for (const stray of ["RECIPE.md", "preview.png", "keys.json", "mods", "layouts"]) {
+  if (exists(stray)) error(`${stray} at the top of the repo: it belongs in a mod's folder (<folder>/${stray})`);
+}
 
-const mods = exists("mods") ? readdirSync(join(ROOT, "mods"), { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name) : [];
-if (!mods.length) error("no mods/<name>/ folder");
+const entries = readdirSync(ROOT, { withFileTypes: true })
+  .filter((d) => d.isDirectory() && !d.name.startsWith(".") && exists(`${d.name}/RECIPE.md`))
+  .map((d) => d.name).sort();
+if (!entries.length) error("no mod folder: a gallery entry is a top-level folder with a RECIPE.md");
+const only = process.argv[2];
+if (only && !entries.includes(only)) error(`${only}: not a mod folder (${entries.join(", ")})`);
 
-// --- preview.png ---
+const allMods = new Map(); // mod name -> entries carrying it
+for (const entry of entries) {
+  const mods = exists(`${entry}/mods`) ? readdirSync(join(ROOT, entry, "mods"), { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name) : [];
+  for (const name of mods) allMods.set(name, [...(allMods.get(name) ?? []), entry]);
+}
 
-if (exists("preview.png")) {
-  const png = readFileSync(join(ROOT, "preview.png"));
-  if (png.subarray(0, 8).toString("hex") !== "89504e470d0a1a0a") error("preview.png is not a PNG");
-  else {
-    const width = png.readUInt32BE(16), height = png.readUInt32BE(20);
-    if (width < 800) warn(`preview.png is ${width}px wide: under 800px looks blurry on the mods page`);
-    if (png.length > 2 * 1024 * 1024) warn(`preview.png is ${(png.length / 1048576).toFixed(1)} MB: keep it under 2 MB`);
-    if (width / height > 3 || height / width > 3) warn(`preview.png is ${width}×${height}: an extreme ratio crops badly`);
+for (const entry of entries) if (!only || entry === only) checkEntry(entry);
+
+// A mod carried by two entries is installed from either: the copies must stay identical.
+for (const [name, carriers] of allMods) {
+  if (carriers.length < 2) continue;
+  const [first, ...rest] = carriers, base = `${first}/mods/${name}`;
+  const list = (dir) => walk(dir).map((f) => relative(join(ROOT, dir), join(ROOT, f))).sort();
+  for (const other of rest) {
+    const dir = `${other}/mods/${name}`, a = list(base), b = list(dir);
+    if (a.join("\n") !== b.join("\n") || a.some((f) => read(`${base}/${f}`) !== read(`${dir}/${f}`))) {
+      error(`mods/${name} differs between ${first}/ and ${other}/: copies of one mod must be identical`);
+    }
   }
 }
 
-// --- RECIPE.md (AGENTS.md, "Layouts and mods other people made": six parts, in order) ---
+// --- Links to the gallery: each must name a real entry, or it lands on herdr.dev's home page ---
 
-if (exists("RECIPE.md")) {
-  const recipe = read("RECIPE.md");
-  if (!/^# \S/.test(recipe)) error("RECIPE.md must start with '# <Name>'");
-  if (!/!\[[^\]]*\]\(preview\.png\)/.test(recipe)) error("RECIPE.md must show ![Name](preview.png) under its title");
+const docs = walk(".").filter((f) => f.endsWith(".md"));
+for (const file of docs) {
+  // A slug ending at "<" is a placeholder, like herdr-cria--<folder>.
+  for (const [, owner, slug] of read(file).matchAll(/herdr\.dev\/mods\/([\w.-]+)\/([\w.-]+)(?![\w.<-])/g)) {
+    if (owner !== OWNER) continue;
+    const entry = slug.startsWith(`${REPO}--`) ? slug.slice(REPO.length + 2) : null;
+    if (!entry || !entries.includes(entry)) error(`${file}: herdr.dev/mods/${owner}/${slug} is no entry; use herdr.dev/mods/${OWNER}/${REPO}--<folder>`);
+  }
+}
+
+function checkEntry(entry) {
+  const at = (path) => `${entry}/${path}`;
+
+  if (exists(at("layouts"))) error(`${at("layouts/")} found: a mod entry has only mods/<name>/ (a layout goes to herdr.dev/layouts)`);
+  if (!exists(at("preview.png"))) error(`${at("preview.png")} missing: herdr.dev/mods shows it on the mod's card`);
+  if (exists(at("keys.json"))) { try { JSON.parse(read(at("keys.json"))); } catch (e) { error(`${at("keys.json")} is not valid JSON: ${e.message}`); } }
+
+  const mods = exists(at("mods")) ? readdirSync(join(ROOT, entry, "mods"), { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name) : [];
+  if (!mods.length) error(`${entry}: no mods/<name>/ folder`);
+
+  // --- preview.png ---
+
+  if (exists(at("preview.png"))) {
+    const png = readFileSync(join(ROOT, at("preview.png")));
+    if (png.subarray(0, 8).toString("hex") !== "89504e470d0a1a0a") error(`${at("preview.png")} is not a PNG`);
+    else {
+      const width = png.readUInt32BE(16), height = png.readUInt32BE(20);
+      if (width < 800) warn(`${at("preview.png")} is ${width}px wide: under 800px looks blurry on the mods page`);
+      if (png.length > 2 * 1024 * 1024) warn(`${at("preview.png")} is ${(png.length / 1048576).toFixed(1)} MB: keep it under 2 MB`);
+      if (width / height > 3 || height / width > 3) warn(`${at("preview.png")} is ${width}×${height}: an extreme ratio crops badly`);
+    }
+  }
+
+  // --- RECIPE.md (AGENTS.md, "Layouts and mods other people made": six parts, in order) ---
+
+  const recipe = read(at("RECIPE.md"));
+  if (!/^# \S/.test(recipe)) error(`${at("RECIPE.md")} must start with '# <Name>'`);
+  if (!/!\[[^\]]*\]\(preview\.png\)/.test(recipe)) error(`${at("RECIPE.md")} must show ![Name](preview.png) under its title`);
   const headings = [...recipe.matchAll(/^#{2,3}\s+(.+?)\s*$/gm)].map((m) => m[1].replace(/[*:]/g, "").trim().toLowerCase());
-  let at = -1;
+  let last = -1;
   for (const section of RECIPE_SECTIONS) {
     const i = headings.indexOf(section.toLowerCase());
-    if (i < 0) error(`RECIPE.md has no '## ${section}' section`);
-    else if (i < at) error(`RECIPE.md: '## ${section}' is out of order (${RECIPE_SECTIONS.join(", ")})`);
-    else at = i;
-  }
-}
-
-// --- Each mod (AGENTS.md, "Mods: mods/<name>/" and "A mod") ---
-
-const code = [];
-for (const name of mods) {
-  const dir = `mods/${name}`;
-  if (SHIPPED.includes(name)) error(`${dir}: '${name}' is a mod Herdr ships; rename it`);
-  if (!/^[a-z0-9][a-z0-9-]*$/.test(name)) warn(`${dir}: use lower-case letters, digits and dashes in a mod name`);
-
-  if (!exists(`${dir}/main.js`)) error(`${dir}/main.js missing`);
-  else if (!/export\s+default\s+class\s+\w+\s+extends\s+View\b/.test(read(`${dir}/main.js`))) error(`${dir}/main.js must default-export a class extending View`);
-
-  if (!exists(`${dir}/mod.json`)) warn(`${dir}/mod.json missing: the mod docks with Herdr's defaults`);
-  else {
-    let manifest = null;
-    try { manifest = JSON.parse(read(`${dir}/mod.json`)); } catch (e) { error(`${dir}/mod.json is not valid JSON: ${e.message}`); }
-    if (manifest) {
-      if (manifest.place !== undefined && !PLACES.includes(manifest.place)) error(`${dir}/mod.json: place must be one of ${PLACES.join(", ")}`);
-      if (manifest.size !== undefined && !(typeof manifest.size === "number" && manifest.size > 0)) error(`${dir}/mod.json: size must be a positive number`);
-      if (manifest.focusable !== undefined && typeof manifest.focusable !== "boolean") error(`${dir}/mod.json: focusable must be true or false`);
-    }
+    if (i < 0) error(`${at("RECIPE.md")} has no '## ${section}' section`);
+    else if (i < last) error(`${at("RECIPE.md")}: '## ${section}' is out of order (${RECIPE_SECTIONS.join(", ")})`);
+    else last = i;
   }
 
-  for (const file of walk(dir).filter((f) => f.endsWith(".js"))) {
-    const text = read(file);
-    code.push({ file, text, name });
+  // --- Each mod (AGENTS.md, "Mods: mods/<name>/" and "A mod") ---
 
-    try { execFileSync(process.execPath, ["--check", join(ROOT, file)], { stdio: "pipe" }); }
-    catch (e) { error(`${file}: syntax error\n${String(e.stderr).trim()}`); }
+  const code = [];
+  for (const name of mods) {
+    const dir = at(`mods/${name}`);
+    if (SHIPPED.includes(name)) error(`${dir}: '${name}' is a mod Herdr ships; rename it`);
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(name)) warn(`${dir}: use lower-case letters, digits and dashes in a mod name`);
 
-    // Comments and strings stripped: "setTimeout" in a comment explaining why it isn't used is fine.
-    const bare = text.replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, "").replace(/(["'`])(?:\\.|(?!\1)[^\\])*\1/g, '""');
-    if (/\b(setTimeout|setInterval)\s*\(/.test(bare)) error(`${file}: setTimeout/setInterval don't exist in a mod; use cx.timer`);
-    if (/\brequire\s*\(/.test(bare)) error(`${file}: require() doesn't exist in a mod; use import`);
-    if (/^await\b/m.test(bare)) error(`${file}: top-level await; use cx.spawn in init`);
+    if (!exists(`${dir}/main.js`)) error(`${dir}/main.js missing`);
+    else if (!/export\s+default\s+class\s+\w+\s+extends\s+View\b/.test(read(`${dir}/main.js`))) error(`${dir}/main.js must default-export a class extending View`);
 
-    for (const [, spec] of text.matchAll(/^\s*import\s[^;]*?from\s+["']([^"']+)["']/gm)) {
-      if (spec.startsWith(".")) { if (!existsSync(join(ROOT, dirname(file), spec))) error(`${file}: imports ${spec}, which doesn't exist`); }
-      else if (!IMPORTS.includes(spec)) error(`${file}: imports '${spec}'; a mod can import only ${IMPORTS.join(", ")} and its own files`);
+    if (!exists(`${dir}/mod.json`)) warn(`${dir}/mod.json missing: the mod docks with Herdr's defaults`);
+    else {
+      let manifest = null;
+      try { manifest = JSON.parse(read(`${dir}/mod.json`)); } catch (e) { error(`${dir}/mod.json is not valid JSON: ${e.message}`); }
+      if (manifest) {
+        if (manifest.place !== undefined && !PLACES.includes(manifest.place)) error(`${dir}/mod.json: place must be one of ${PLACES.join(", ")}`);
+        if (manifest.size !== undefined && !(typeof manifest.size === "number" && manifest.size > 0)) error(`${dir}/mod.json: size must be a positive number`);
+        if (manifest.focusable !== undefined && typeof manifest.focusable !== "boolean") error(`${dir}/mod.json: focusable must be true or false`);
+      }
     }
 
-    // Assets load from the Herdr home as mods/<name>/…, so the folder name is part of every path.
-    for (const [, owner, rest] of text.matchAll(/["'`]mods\/([^/"'`$]+)\/([^"'`]*)["'`]/g)) {
-      if (owner !== name) error(`${file}: asset path mods/${owner}/… points outside this mod (${name})`);
-      else if (rest && !rest.includes("${") && !exists(`${dir}/${rest}`)) error(`${file}: asset mods/${owner}/${rest} doesn't exist`);
-    }
-    for (const [, target] of text.matchAll(/\bmod:\s*["']([^"']+)["']/g)) {
-      if (target !== name && !mods.includes(target)) warn(`${file}: opens mod '${target}', which isn't in this repo`);
+    for (const file of walk(dir).filter((f) => f.endsWith(".js"))) {
+      const text = read(file);
+      code.push({ file, text, name });
+
+      try { execFileSync(process.execPath, ["--check", join(ROOT, file)], { stdio: "pipe" }); }
+      catch (e) { error(`${file}: syntax error\n${String(e.stderr).trim()}`); }
+
+      // Comments and strings stripped: "setTimeout" in a comment explaining why it isn't used is fine.
+      const bare = text.replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, "").replace(/(["'`])(?:\\.|(?!\1)[^\\])*\1/g, '""');
+      if (/\b(setTimeout|setInterval)\s*\(/.test(bare)) error(`${file}: setTimeout/setInterval don't exist in a mod; use cx.timer`);
+      if (/\brequire\s*\(/.test(bare)) error(`${file}: require() doesn't exist in a mod; use import`);
+      if (/^await\b/m.test(bare)) error(`${file}: top-level await; use cx.spawn in init`);
+
+      for (const [, spec] of text.matchAll(/^\s*import\s[^;]*?from\s+["']([^"']+)["']/gm)) {
+        if (spec.startsWith(".")) {
+          const target = relative(ROOT, join(ROOT, dirname(file), spec));
+          if (!existsSync(join(ROOT, target))) error(`${file}: imports ${spec}, which doesn't exist`);
+          else if (!target.startsWith(`${dir}/`)) error(`${file}: imports ${spec}, outside its own folder; Herdr can't load it`);
+        }
+        else if (!IMPORTS.includes(spec)) error(`${file}: imports '${spec}'; a mod can import only ${IMPORTS.join(", ")} and its own files`);
+      }
+
+      // Assets load from the Herdr home as mods/<name>/…, so the folder name is part of every path.
+      for (const [, owner, rest] of text.matchAll(/["'`]mods\/([^/"'`$]+)\/([^"'`]*)["'`]/g)) {
+        if (owner !== name) error(`${file}: asset path mods/${owner}/… points outside this mod (${name})`);
+        else if (rest && !rest.includes("${") && !exists(`${dir}/${rest}`)) error(`${file}: asset mods/${owner}/${rest} doesn't exist`);
+      }
+      // The gallery installs one entry: a mod it opens must come with it.
+      for (const [, target] of text.matchAll(/\bmod:\s*["']([^"']+)["']/g)) {
+        if (target !== name && !mods.includes(target)) warn(`${file}: opens mod '${target}', which isn't in ${entry}/mods/`);
+      }
     }
   }
-}
 
-// --- What a person must be told before adding it (AGENTS.md, step 1): network, programs, outside files ---
+  // --- What a person must be told before adding it (AGENTS.md, step 1): network, programs, outside files ---
 
-if (exists("RECIPE.md")) {
-  const recipe = read("RECIPE.md").toLowerCase(), all = code.map((c) => c.text).join("\n");
+  const said = recipe.toLowerCase(), all = code.map((c) => c.text).join("\n");
   const disclose = [
     [/\bexec\s*\(|\bhc\s*\(/, /\bexec\b|runs programs|\bprograms?\b/, "runs programs (exec/hc)"],
     [/\bfetch\s*\(|\bcurl\b|open_url/, /network|download|fetch|web/, "reaches the network"],
     [/readTextFile|watchFolder/, /outside its (own )?folder|any file|files? (it|you) open/, "reads files outside its own folder"],
   ];
-  for (const [uses, says, what] of disclose) if (uses.test(all) && !says.test(recipe)) error(`RECIPE.md must say the mod ${what}`);
+  for (const [uses, says, what] of disclose) if (uses.test(all) && !says.test(said)) error(`${at("RECIPE.md")} must say the mod ${what}`);
+
+  // --- The entry's own documents ---
+
+  if (!exists(at("CHANGELOG.md"))) warn(`${at("CHANGELOG.md")} missing`);
+  else if (!/^## \[Unreleased\]/m.test(read(at("CHANGELOG.md")))) warn(`${at("CHANGELOG.md")} has no '## [Unreleased]' section`);
+  if (!exists(at("README.md"))) warn(`${at("README.md")} missing: GitHub shows it when someone opens the folder`);
 }
 
 // --- Repo hygiene ---
@@ -156,13 +219,11 @@ if (files) {
   }
 } else warn("not a git checkout: skipped the tracked-file checks");
 
-if (!exists("CHANGELOG.md")) warn("CHANGELOG.md missing");
-else if (!/^## \[Unreleased\]/m.test(read("CHANGELOG.md"))) warn("CHANGELOG.md has no '## [Unreleased]' section");
-if (!exists("README.md")) warn("README.md missing: GitHub visitors land on it");
 
 // --- Report ---
 
 for (const w of warnings) console.log(`warning  ${w}`);
 for (const e of errors) console.log(`error    ${e}`);
-console.log(`\n${errors.length} error(s), ${warnings.length} warning(s) · ${mods.length} mod(s): ${mods.join(", ") || "none"}`);
+const checked = entries.filter((e) => !only || e === only);
+console.log(`\n${errors.length} error(s), ${warnings.length} warning(s) · ${checked.length} entr${checked.length === 1 ? "y" : "ies"}: ${checked.map((e) => `${e} (${[...allMods].filter(([, c]) => c.includes(e)).map(([m]) => m).join(", ")})`).join("; ") || "none"}`);
 process.exit(errors.length ? 1 : 0);
