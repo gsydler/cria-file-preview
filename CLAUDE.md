@@ -28,7 +28,7 @@ A change here reaches every entry: run every entry's checks after it.
 
 - `scripts/check-herdr.mjs`: Herdr's requirements for each entry (recipe sections, preview, mod rules, disclosure), the repo's layout, and links to `herdr.dev/mods/gsydler/…`, which must name a real entry. `node scripts/check-herdr.mjs` checks them all, `node scripts/check-herdr.mjs <folder>` one. `OWNER` and `REPO` at its top build the addresses: a repo rename changes them.
 - `scripts/banner.sh <folder>`: renders `<folder>/assets/banner.html` to `<folder>/preview.png`.
-- `.github/workflows/ci.yml`: one job runs `check-herdr.mjs`; a matrix runs each entry's `tests/` on Linux, macOS and Windows. An entry with tests adds itself to `matrix.mod`, and a program it needs on Linux to an `include` line (`apt`).
+- `.github/workflows/ci.yml`: one job runs `check-herdr.mjs`; one job per system (`Tests (ubuntu-latest)`, `Tests (macos-latest)`, `Tests (windows-latest)`) runs every entry's tests with `node --test`. `main`'s branch protection requires these jobs by name: keep the names, whatever the repo holds. A program an entry's tests need on Linux goes on the `apt-get install` line, with a comment naming the entry.
 - `.claude/skills/`: `release-check` and `smoke-test`, written for `file-preview/` today. A second entry that needs them makes them take the folder, keeping each mod's own rules (security, features, samples) in its folder.
 
 ## Checks
@@ -45,7 +45,7 @@ Each entry has its own: `<folder>/CHANGELOG.md` ([Keep a Changelog](https://keep
 ## Adding a mod
 
 1. A folder named for its address (`herdr-cria--<folder>`), with `mods/<name>/`, `RECIPE.md` (the six parts `check-herdr.mjs` asks for), `preview.png`, `README.md`, `CHANGELOG.md` starting at `[Unreleased]`, and a `CLAUDE.md` for its own rules.
-2. Logic that doesn't draw or call `herdr` goes in pure modules with tests in `<folder>/tests/`; add the folder to CI's `matrix.mod`.
+2. Logic that doesn't draw or call `herdr` goes in pure modules with tests in `<folder>/tests/` (`*.test.mjs`, which CI's `node --test` finds by itself); a program they need on Linux goes on CI's `apt-get install` line.
 3. Its row in the tables here and in `README.md`, with its address.
 4. `node scripts/check-herdr.mjs` and `herdr-app check <folder>/mods/<name>` pass.
 

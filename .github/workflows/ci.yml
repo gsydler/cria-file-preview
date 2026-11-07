@@ -14,20 +14,14 @@ concurrency:
 
 jobs:
   test:
-    name: Tests (${{ matrix.mod }}, ${{ matrix.os }})
-    # One cell per mod folder and system: each runs only that folder's tests. A mod without tests stays
-    # out of the matrix; check-herdr still covers it. Anything one mod needs installed goes in its
-    # `include` entry (`apt` for Linux).
+    # Job names stay "Tests (<os>)" whatever mods the repo holds: main's branch protection requires them
+    # by name, so adding a mod never touches the repo's settings. Each job runs every mod's tests;
+    # a failure's output names the file, which starts with the mod's folder.
+    name: Tests (${{ matrix.os }})
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        mod: [file-preview]
-        include:
-          # The image and PDF scripts differ per system: sips and PDFKit on macOS, file and poppler on Linux,
-          # PowerShell and Windows.Data.Pdf on Windows.
-          - mod: file-preview
-            apt: poppler-utils
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     steps:
@@ -37,16 +31,19 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-      - if: runner.os == 'Linux' && matrix.apt
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq ${{ matrix.apt }}
+      # What a mod's tests need on Linux, one line per mod. The image and PDF scripts differ per system:
+      # sips and PDFKit on macOS, file and poppler on Linux, PowerShell and Windows.Data.Pdf on Windows.
+      #   file-preview: poppler-utils
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
       - if: runner.os != 'Windows'
-        run: node --test '${{ matrix.mod }}/tests/*.test.mjs'
+        run: node --test
       # Herdr's PATH on Windows has none of Git's tools, whatever this runner has.
       - if: runner.os == 'Windows'
         shell: powershell
         run: |
           $env:PATH = ($env:PATH -split ';' | Where-Object { $_ -notmatch '\\Git\\' }) -join ';'
-          node --test '${{ matrix.mod }}/tests/*.test.mjs'
+          node --test
 
   herdr:
     name: Herdr mod requirements

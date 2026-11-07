@@ -46,7 +46,7 @@ A folder's name makes the mod's address (`herdr-cria--<folder>`); the mod's own 
 ## What the mods share
 
 - **Checks.** `scripts/check-herdr.mjs` holds every mod to what herdr.dev and Herdr ask of a shared mod: the recipe's parts in order, a preview image, only `herdr`, `gpui-kit` and `gpui-base` imports, no `setTimeout`, every program, network access and outside file disclosed in the recipe. It also checks that links to a mod's herdr.dev page name a real folder. CI runs it on every push.
-- **CI.** One workflow for all mods: the checks once, then each mod's tests on Linux, macOS and Windows, one job per mod and system, so a failure names both.
+- **CI.** One workflow for all mods: the checks once, then every mod's tests on Linux, macOS and Windows. A new mod's tests run with no change to the workflow.
 - **The banner script.** `scripts/banner.sh <folder>` renders `<folder>/assets/banner.html` into `<folder>/preview.png`.
 - **The license**, Apache-2.0, for every mod.
 
