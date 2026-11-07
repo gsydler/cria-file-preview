@@ -14,8 +14,10 @@ concurrency:
 
 jobs:
   test:
+    # Job names stay "Tests (<os>)" whatever mods the repo holds: main's branch protection requires them
+    # by name, so adding a mod never touches the repo's settings. Each job runs every mod's tests;
+    # a failure's output names the file, which starts with the mod's folder.
     name: Tests (${{ matrix.os }})
-    # The image and PDF scripts differ per system: sips and PDFKit on macOS, file and poppler on Linux, PowerShell and Windows.Data.Pdf on Windows.
     strategy:
       fail-fast: false
       matrix:
@@ -29,6 +31,9 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
+      # What a mod's tests need on Linux, one line per mod. The image and PDF scripts differ per system:
+      # sips and PDFKit on macOS, file and poppler on Linux, PowerShell and Windows.Data.Pdf on Windows.
+      #   file-preview: poppler-utils
       - if: runner.os == 'Linux'
         run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
       - if: runner.os != 'Windows'
@@ -51,5 +56,6 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-      # Static checks only: `herdr-app check` needs the desktop app and runs locally (release-check skill).
+      # Static checks of every mod folder at once. `herdr-app check` needs the desktop app and runs
+      # locally (release-check skill).
       - run: node scripts/check-herdr.mjs

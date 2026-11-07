@@ -1,8 +1,12 @@
 # Changelog
 
-Every change people using the mod would notice. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html), tagged `vX.Y.Z`.
+Every change people using the mod would notice. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html), tagged `file-preview/vX.Y.Z` (0.1.0 was tagged `v0.1.0`, before the repo held several mods).
 
 ## [Unreleased]
+
+### Changed
+
+- The mod moved to the `herdr-cria` repo, which holds several mods: add it with `herdr.dev/mods/gsydler/herdr-cria--file-preview`. Nothing changes for a copy already installed, or for a Files panel already patched to open it: the mod is still called `cria-file-preview`.
 
 ## [0.1.0] - 2026-11-05
 
