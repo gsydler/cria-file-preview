@@ -7,6 +7,7 @@
 | Mod | What it does | Add it |
 |---|---|---|
 | [File preview](file-preview/) | Shows one file read-only in a tab or a split: Markdown with working links and images, PDF, images, CSV and TSV tables, JSON as a tree, anything else as code. Reloads when the file changes on disk. | `herdr.dev/mods/gsydler/herdr-cria--file-preview` |
+| [Files extended](files-extended/) | Herdr's Files panel with a right-click menu (new, rename, cut, copy, paste, duplicate, trash, delete, open in your editor or a terminal, copy paths) and an icon per kind of file. A click opens the file in File preview when you have it. | `herdr.dev/mods/gsydler/herdr-cria--files-extended` |
 
 To add one, ask your agent in Herdr:
 
@@ -32,6 +33,8 @@ herdr-cria/
 │   ├── tests/                 unit tests (node --test)
 │   ├── samples/               one file per kind the preview shows, with what each should show
 │   └── assets/                the banner preview.png is rendered from
+├── files-extended/            one mod: herdr.dev/mods/gsydler/herdr-cria--files-extended, laid out the same way,
+│                              with a NOTICE for the Herdr code it is based on
 ├── scripts/
 │   ├── check-herdr.mjs        checks every mod against Herdr's rules for a shared mod
 │   └── banner.sh              renders a mod's banner to its preview.png

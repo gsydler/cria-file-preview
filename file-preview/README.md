@@ -12,7 +12,7 @@ A [Herdr](https://herdr.dev) mod that previews a file in a tab or a split: Markd
 - Live reload: a file on this computer reloads when it changes on disk, keeping Raw, zoom and the open JSON branches.
 - Long files: code and tables show the first 4 MiB of a file over 1 MiB; Markdown and JSON say it's too large. A file that isn't UTF-8 says so.
 - Back: after following a link to another file, ← returns to the previous one.
-- The ⋯ menu: Open in editor (`$VISUAL` or `$EDITOR`, wait flags dropped, else the default app), Open with default app, Reveal in Finder (Explorer on Windows, the containing folder on Linux), Copy path, Copy relative path (from the repo root, else `~/`).
+- The ⋯ menu: Open in editor (`$VISUAL` or `$EDITOR`, wait flags dropped, else the default app; vim, nano and other terminal editors open in a new Herdr tab when your login shell answers quickly), Open with default app, Reveal in Finder (Explorer on Windows, the containing folder on Linux), Copy path, Copy relative path (from the repo root, else `~/`).
 - Files on another machine (a remote Herdr space) open in the text-based viewers. Images, PDFs and the open and reveal actions need the file on this computer.
 
 **The viewers**
@@ -36,7 +36,7 @@ Ask your agent in Herdr to add `herdr.dev/mods/gsydler/herdr-cria--file-preview`
 herdr-app check ~/.config/herdr-app/mods/cria-file-preview
 ```
 
-The mod adds nothing to your layout (`"place": "none"`). The installing agent offers to make a click on a file in your Files panel open it here instead of the panel's own text preview: Herdr's panel can't be edited, so it clones the panel, and your layout if it's one of Herdr's, and switches them over. `RECIPE.md` ("Install") has the steps, and how to undo them.
+The mod adds nothing to your layout (`"place": "none"`). The installing agent offers to make a click on a file in your Files panel open it here instead of the panel's own text preview: Herdr's panel can't be edited, so it clones the panel, and your layout if it's one of Herdr's, and switches them over. `RECIPE.md` ("Install") has the steps, and how to undo them. [cria-files-extended](../files-extended/), a Files panel with a right-click menu, opens files here by itself, installed before or after this one.
 
 Without that, open a file with:
 

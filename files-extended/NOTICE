@@ -1,0 +1,13 @@
+cria-files-extended
+Copyright 2026 gsydler
+
+mods/cria-files-extended/main.js, chevron-down.svg and chevron-right.svg come
+from the "files" mod (version 0.1.15) that ships with the Herdr desktop app
+(https://herdr.dev), licensed under the Apache License, Version 2.0, the same
+license as this repository (../LICENSE). main.js is modified: the right-click
+menu, the file icons and opening files in cria-file-preview were added, and
+its folder listing and git marks moved to listing.js, which holds those parts
+of Herdr's code. The two SVGs are unmodified.
+
+The icons in mods/cria-files-extended/icons/ are from Lucide
+(https://lucide.dev), under the ISC License in icons/LICENSE.

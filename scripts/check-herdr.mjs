@@ -26,7 +26,8 @@ const exists = (path) => existsSync(join(ROOT, path));
 // Mods Herdr ships (AGENTS.md, "Mods"): a shared mod must not take one of their names.
 const SHIPPED = ["spaces", "agents", "tabs", "menu", "prompt", "confirm", "help", "toast", "picker", "peek", "pane", "worktree", "files"];
 const PLACES = ["right", "left", "top", "bottom", "none"];
-const IMPORTS = ["gpui-kit", "gpui-base", "herdr"];
+// AGENTS.md ("The `herdr` module") also lists `fs/promises` among a mod's built-ins.
+const IMPORTS = ["gpui-kit", "gpui-base", "herdr", "fs/promises"];
 const RECIPE_SECTIONS = ["What you see", "How it behaves", "Built from", "Watch out", "Done when"];
 // Files the app writes into a mod folder (AGENTS.md: jsconfig.json, .d.ts): never committed.
 const GENERATED = /(^|\/)(jsconfig\.json|[^/]+\.d\.ts)$/;
@@ -82,6 +83,14 @@ for (const [name, carriers] of allMods) {
       error(`mods/${name} differs between ${first}/ and ${other}/: copies of one mod must be identical`);
     }
   }
+}
+
+// Files two mods each carry a copy of, since a mod can't import another's: open-file.js is how a
+// panel opens cria-file-preview (file-preview/CLAUDE.md), and both open files in the editor alike.
+const SAME = ["open-file.js", "editor-command.js", "editor.js"];
+for (const same of SAME) {
+  const copies = [...allMods].flatMap(([name, [entry]]) => exists(`${entry}/mods/${name}/${same}`) ? [`${entry}/mods/${name}/${same}`] : []);
+  for (const file of copies.slice(1)) if (read(file) !== read(copies[0])) error(`${file} differs from ${copies[0]}: copies of ${same} must be identical`);
 }
 
 // --- Links to the gallery: each must name a real entry, or it lands on herdr.dev's home page ---
@@ -167,6 +176,9 @@ function checkEntry(entry) {
       if (/\b(setTimeout|setInterval)\s*\(/.test(bare)) error(`${file}: setTimeout/setInterval don't exist in a mod; use cx.timer`);
       if (/\brequire\s*\(/.test(bare)) error(`${file}: require() doesn't exist in a mod; use import`);
       if (/^await\b/m.test(bare)) error(`${file}: top-level await; use cx.spawn in init`);
+      // AGENTS.md ("A mod"): side effects on globalThis survive a reload, and a cx belongs to one callback.
+      if (/\bglobalThis\b/.test(bare)) warn(`${file}: globalThis outlives a reload; keep side effects out of the module's top level`);
+      if (/\bthis\.\w+\s*=\s*cx\b(?!\s*[.([])/.test(bare)) warn(`${file}: keeps a cx for later; use the one each callback gets`);
 
       for (const [, spec] of text.matchAll(/^\s*import\s[^;]*?from\s+["']([^"']+)["']/gm)) {
         if (spec.startsWith(".")) {
@@ -182,9 +194,11 @@ function checkEntry(entry) {
         if (owner !== name) error(`${file}: asset path mods/${owner}/… points outside this mod (${name})`);
         else if (rest && !rest.includes("${") && !exists(`${dir}/${rest}`)) error(`${file}: asset mods/${owner}/${rest} doesn't exist`);
       }
-      // The gallery installs one entry: a mod it opens must come with it.
+      // The gallery installs one entry: a mod it opens must come with it, unless another entry
+      // here carries it, to install on its own (its RECIPE.md says what the opener does without it).
       for (const [, target] of text.matchAll(/\bmod:\s*["']([^"']+)["']/g)) {
-        if (target !== name && !mods.includes(target)) warn(`${file}: opens mod '${target}', which isn't in ${entry}/mods/`);
+        if (target !== name && !mods.includes(target) && !allMods.has(target)) warn(`${file}: opens mod '${target}', which isn't in ${entry}/mods/`);
+        else if (target !== name && !mods.includes(target) && !recipe.includes(target)) warn(`${file}: opens mod '${target}' from another entry; ${at("RECIPE.md")} should name it and say what happens without it`);
       }
     }
   }
@@ -197,6 +211,9 @@ function checkEntry(entry) {
     [/\bfetch\s*\(|\bcurl\b|open_url/, /network|download|fetch|web/, "reaches the network"],
     [/readTextFile|watchFolder/, /outside its (own )?folder|any file|files? (it|you) open/, "reads files outside its own folder"],
   ];
+  // Writing files through fs/promises is told in "Watch out" (where the RECIPE says what the mod does).
+  const watchOut = recipe.split(/^## Watch out\s*$/m)[1]?.split(/^## /m)[0].toLowerCase() ?? "";
+  if (/\bfs\.(writeFile|appendFile|rm|rename|mkdir|unlink)\s*\(/.test(all) && !/\bwrit/.test(watchOut)) warn(`${at("RECIPE.md")}: the mod writes files (fs/promises); its "Watch out" should say where`);
   for (const [uses, says, what] of disclose) if (uses.test(all) && !says.test(said)) error(`${at("RECIPE.md")} must say the mod ${what}`);
 
   // --- The entry's own documents ---

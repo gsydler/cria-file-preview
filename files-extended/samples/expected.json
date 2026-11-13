@@ -1,0 +1,248 @@
+{
+  "rows": {
+    ".env.example": {
+      "icon": "file-key",
+      "color": "ansi3"
+    },
+    ".github/": {
+      "icon": "folder-git",
+      "color": "accent"
+    },
+    ".github/workflows/": {
+      "icon": "folder",
+      "color": "accent"
+    },
+    ".github/workflows/ci.yml": {
+      "icon": "file-braces",
+      "color": "ansi3"
+    },
+    ".gitignore": {
+      "icon": "file-cog",
+      "color": "ansi6"
+    },
+    "Makefile": {
+      "icon": "file-cog",
+      "color": "ansi6"
+    },
+    "NOTES": {
+      "icon": "file",
+      "color": "muted"
+    },
+    "README.md": {
+      "icon": "file-text",
+      "color": "muted"
+    },
+    "a name with spaces.txt": {
+      "icon": "file-text",
+      "color": "muted"
+    },
+    "cert.pem": {
+      "icon": "file-key",
+      "color": "ansi3"
+    },
+    "change.diff": {
+      "icon": "file-diff",
+      "color": "ansi2"
+    },
+    "config/": {
+      "icon": "folder",
+      "color": "accent"
+    },
+    "config/app.ini": {
+      "icon": "file-cog",
+      "color": "ansi6"
+    },
+    "config/app.yaml": {
+      "icon": "file-braces",
+      "color": "ansi3"
+    },
+    "config/settings.json": {
+      "icon": "file-braces",
+      "color": "ansi3"
+    },
+    "data/": {
+      "icon": "folder",
+      "color": "accent"
+    },
+    "data/archive.zip": {
+      "icon": "file-archive",
+      "color": "ansi1"
+    },
+    "data/query.sql": {
+      "icon": "file-database",
+      "color": "ansi6"
+    },
+    "data/table.csv": {
+      "icon": "file-spreadsheet",
+      "color": "ansi2"
+    },
+    "deep/": {
+      "icon": "folder",
+      "color": "accent"
+    },
+    "deep/er/": {
+      "icon": "folder",
+      "color": "accent"
+    },
+    "deep/er/still/": {
+      "icon": "folder",
+      "color": "accent"
+    },
+    "deep/er/still/here.txt": {
+      "icon": "file-text",
+      "color": "muted"
+    },
+    "docs/": {
+      "icon": "folder",
+      "color": "accent"
+    },
+    "docs/notes.txt": {
+      "icon": "file-text",
+      "color": "muted"
+    },
+    "docs/sample.pdf": {
+      "icon": "file-text",
+      "color": "ansi1"
+    },
+    "img/": {
+      "icon": "folder",
+      "color": "accent"
+    },
+    "img/font.ttf": {
+      "icon": "file-type",
+      "color": "muted"
+    },
+    "img/logo.svg": {
+      "icon": "file-image",
+      "color": "ansi5"
+    },
+    "img/picture.png": {
+      "icon": "file-image",
+      "color": "ansi5"
+    },
+    "it's $(x).txt": {
+      "icon": "file-text",
+      "color": "muted"
+    },
+    "media/": {
+      "icon": "folder",
+      "color": "accent"
+    },
+    "media/clip.mp4": {
+      "icon": "file-video-camera",
+      "color": "ansi5"
+    },
+    "media/song.mp3": {
+      "icon": "file-music",
+      "color": "ansi5"
+    },
+    "package-lock.json": {
+      "icon": "file-lock",
+      "color": "dim"
+    },
+    "scripts/": {
+      "icon": "folder",
+      "color": "accent"
+    },
+    "scripts/build.sh": {
+      "icon": "file-terminal",
+      "color": "ansi2"
+    },
+    "src/": {
+      "icon": "folder",
+      "color": "accent"
+    },
+    "src/app.js": {
+      "icon": "file-code",
+      "color": "ansi4"
+    },
+    "src/main.py": {
+      "icon": "file-code",
+      "color": "ansi4"
+    },
+    "src/types.ts": {
+      "icon": "file-code",
+      "color": "ansi4"
+    }
+  },
+  "visible": [
+    "Header: \"Files\" in semibold, and the folder name, samples, on the right in dim",
+    "Folders first (.github, config, data, deep, docs, img, media, scripts, src), each with a chevron and a folder icon in the accent color; .github has the git folder icon",
+    "Then the files, each icon in the color rows lists: .env.example and cert.pem a key in the theme's ansi3, Makefile and .gitignore a cog, package-lock.json a lock in dim, NOTES a plain file",
+    "a name with spaces.txt and it's $(x).txt shown whole, not cut at a space or a quote"
+  ],
+  "manual": [
+    {
+      "do": "Click deep, then er, then still",
+      "expect": "Each folder opens below itself, indented 18px a level, its chevron turned down and its icon an open folder; here.txt shows at the bottom"
+    },
+    {
+      "do": "Right-click deep, then Expand all",
+      "expect": "deep, er and still all open at once"
+    },
+    {
+      "do": "Right-click here.txt, then Fold folder",
+      "expect": "still closes; deep and er stay open"
+    },
+    {
+      "do": "Right-click any row, then Collapse all",
+      "expect": "Every folder closes"
+    },
+    {
+      "do": "Right-click README.md",
+      "expect": "A 220px menu where the click was: New file…, New folder…; Open in editor, Open with default app, Reveal in Finder (Show in Explorer on Windows, Open containing folder on Linux), Open in terminal; Cut, Copy, Duplicate, Paste (dim); Copy name, Copy path, Copy relative path; Rename…, Move to Trash (Move to Recycle Bin), Delete…; Collapse all (dim when no folder is open). ↑ ↓ move the highlight over the rows that can run, ↑ first landing on the last of them, Enter runs it, Esc closes"
+    },
+    {
+      "do": "Right-click docs, the folder",
+      "expect": "The same menu without Open with default app, and with Expand all before Collapse all"
+    },
+    {
+      "do": "Copy name, then Copy path, then Copy relative path on src/app.js",
+      "expect": "A toast for each: app.js, the full path, then src/app.js (from the panel's folder: the scratch copy is outside git)"
+    },
+    {
+      "do": "Right-click a name with spaces.txt, Duplicate",
+      "expect": "a name with spaces copy.txt appears; a second Duplicate makes a name with spaces copy 2.txt"
+    },
+    {
+      "do": "Right-click it's $(x).txt, Rename…, type it's $(y).txt, Enter",
+      "expect": "The row is renamed, nothing else changes; renaming it to an existing name says \"<name> already exists here\" under the field"
+    },
+    {
+      "do": "Right-click README.md, New file…, type README.md",
+      "expect": "\"README.md already exists here\" under the field; a name with a / says \"A name can't contain /\""
+    },
+    {
+      "do": "Cut src/app.js, right-click docs, Paste",
+      "expect": "app.js moves into docs, which opens to show it; Paste is dim again"
+    },
+    {
+      "do": "Right-click a duplicate, Delete…",
+      "expect": "A box asks \"Delete <name>?\" and says it is deleted for good; Enter deletes, Esc cancels"
+    },
+    {
+      "do": "Right-click the other duplicate, Move to Trash",
+      "expect": "The row goes, a toast says so, and the file is in the Trash (the Recycle Bin on Windows)"
+    },
+    {
+      "do": "With cria-file-preview installed, click README.md",
+      "expect": "It opens in a preview tab; the tree still shows samples. Click it again: the same preview tab gets the focus, no new one"
+    },
+    {
+      "do": "Right-click docs, New file…, type readme.md, Enter; then Copy the top-level README.md, right-click docs, Paste",
+      "expect": "docs gets README copy.md on macOS and Windows (README.md there on Linux); docs/readme.md is still the empty file, nothing is replaced"
+    },
+    {
+      "do": "Right-click a file, move the highlight to Delete… with ↓, then press and hold Enter",
+      "expect": "The Delete box opens and stays open while Enter is held; nothing is deleted until a second press"
+    },
+    {
+      "do": "With a terminal editor as $VISUAL or $EDITOR in your login shell (vim, nvim, nano…), Open in editor on src/main.py",
+      "expect": "A new Herdr tab opens in src with the editor showing main.py; with a graphical editor, that editor opens instead, and no error toast either way"
+    },
+    {
+      "do": "Without cria-file-preview, click README.md",
+      "expect": "Herdr's own text preview fills the panel, with ← in the header back to the tree"
+    }
+  ]
+}
