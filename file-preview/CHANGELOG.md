@@ -4,6 +4,10 @@ Every change people using the mod would notice. The format follows [Keep a Chang
 
 ## [Unreleased]
 
+### Added
+
+- **Wrap lines**, an icon on code views and every Raw view, folds long lines at the pane's edge. Files you open afterwards use the same choice.
+
 ## [0.1.1] - 2026-11-13
 
 ### Changed

@@ -53,7 +53,7 @@ Herdr asks you to know this before adding a mod:
 - **Runs programs:** on macOS and Linux, `sh` (to measure a file, read the start of a long one and stage images), `sips` or `file` (image sizes), `osascript` with PDFKit or `pdftoppm` and `pdfinfo` (PDF pages), `curl` and `file` (web images, after your click), `mv`, `rm` and `find` (in its cache folder only), your login shell (to read `$EDITOR`), and `open` or `xdg-open` for the ⋯ menu. On Windows, PowerShell does all of that, with `curl.exe` for web images and Windows' own PDF renderer, and it loads your PowerShell profile to read `$EDITOR`. Everywhere, `git` (for the relative path) and your editor.
 - **Reaches the network** only when you click **Load them** on a Markdown file's web images: https only, at most 5 MB and 10 seconds each, kept only if the result is an image. Fetching them on open would tell their hosts who reads the document, and when. A web link you click opens in your browser. A Markdown link or image pointing at another computer's shared folder is refused, because Windows would connect to it and offer your credentials.
 - **Reads** the file you open, and the local images a Markdown file shows, wherever they are.
-- **Writes** only to `~/.config/herdr-app/data/cria-file-preview/`: copies of the images it shows and rendered PDF pages, deleted after two weeks.
+- **Writes** only to `~/.config/herdr-app/data/cria-file-preview/`: copies of the images it shows and rendered PDF pages, deleted after two weeks. It also remembers your Wrap lines choice in Herdr's own storage for the mod.
 
 ## Platforms
 
