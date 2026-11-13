@@ -12,7 +12,7 @@ import { v_flex, h_flex, TextView } from "gpui-base";
 import { theme, notify } from "herdr";
 import { resolveLink } from "../links.js";
 import { readText, codeState, codeView } from "./text.js";
-import { rawToggle, iconButton } from "./controls.js";
+import { rawToggle, iconButton, wrapButton } from "./controls.js";
 import { splitBlocks, imageNote } from "../markdown-blocks.js";
 import { stageImage, fetchImage } from "../media.js";
 
@@ -76,6 +76,7 @@ export default {
     return h_flex().gap(6).items_center()
       .when(headings > 1 && !state.raw, (el) => el.child(iconButton("toc", "toc", state.contents ? "Hide the ToC" : "Show the ToC", state.contents,
         () => { state.contents = !state.contents; })))
+      .when(state.raw, (el) => el.child(wrapButton(state, "markdown")))
       .child(rawToggle(state, "Preview", "markdown"));
   },
 

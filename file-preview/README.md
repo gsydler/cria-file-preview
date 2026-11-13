@@ -24,7 +24,7 @@ A [Herdr](https://herdr.dev) mod that previews a file in a tab or a split: Markd
 | Image | `.png` `.jpg` `.jpeg` `.gif` `.webp` `.svg` `.bmp` `.tiff` `.heic` | Fitted to the pane or zoomed from 25% to 400%, with its size in pixels. |
 | Table | `.csv` `.tsv` | A sticky header, row numbers, sideways scrolling, up to 100,000 rows drawn only while on screen. Quoted cells per RFC 4180; a `.csv` whose first line has more `;` than `,` splits on semicolons. Table or Raw. |
 | JSON | `.json` | A collapsible tree: click a row to open or close it, alt-click to do the whole branch, one button to expand or collapse everything. Invalid JSON shows the parse error and the source. Tree or Raw. |
-| Code | anything else | Syntax colors and line numbers, read-only, up to 400,000 characters. Binary files say so instead. |
+| Code | anything else | Syntax colors and line numbers, read-only, up to 400,000 characters. Binary files say so instead. **Wrap lines** here and in every Raw view, remembered across files and restarts. |
 
 `samples/` holds one file per kind; its `README.md` links them all, and `samples/expected.json` says what each should show.
 

@@ -26,7 +26,7 @@
       { "do": "Click \"Load them\"", "expect": "The bar goes; the badge loads or says \"(couldn't load)\"" },
       { "do": "On Windows, click \"A link to another computer\"", "expect": "A warning \"Can't open this link\"; the view stays" },
       { "do": "Click \"The Herdr website\"", "expect": "herdr.dev opens in the browser" },
-      { "do": "Click Raw", "expect": "The Markdown source with line numbers and colors" }
+      { "do": "Click Raw", "expect": "The Markdown source with line numbers and colors, the Wrap lines icon before Preview | Raw" }
     ]
   },
   "docs/setup.md": {
@@ -130,7 +130,11 @@
   "notes.txt": {
     "viewer": "code",
     "facts": { "language": "txt" },
-    "visible": ["Plain text with line numbers"],
-    "manual": []
+    "visible": ["Plain text with line numbers", "Toolbar: the Wrap lines icon, not pressed"],
+    "manual": [
+      { "do": "Click the Wrap lines icon", "expect": "The long last line folds at the pane's edge under its own line number; the icon shows pressed" },
+      { "do": "Open code.js in another tab", "expect": "It opens with Wrap lines on, the choice remembered" },
+      { "do": "Click the icon again", "expect": "Lines no longer wrap; the long one scrolls sideways" }
+    ]
   }
 }

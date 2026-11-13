@@ -7,7 +7,7 @@ import { v_flex, h_flex, v_virtual_list, Scrollbar } from "gpui-base";
 import { theme, settings } from "herdr";
 import { flatten, containers, toggleDeep } from "../json-tree.js";
 import { readText, codeState, codeView } from "./text.js";
-import { rawToggle, iconButton } from "./controls.js";
+import { rawToggle, iconButton, wrapButton } from "./controls.js";
 
 const ROW = 24;
 let views = 0;
@@ -29,12 +29,15 @@ export default {
 
   toolbar(state) {
     const t = theme();
-    if (state.error) return div().max_w(420).truncate().text_size(12).text_color(t.ansi1).child(`Invalid JSON: ${state.error}`);
+    if (state.error) return h_flex().gap(6).items_center()
+      .child(div().max_w(420).truncate().text_size(12).text_color(t.ansi1).child(`Invalid JSON: ${state.error}`))
+      .child(wrapButton(state, "json"));
     const open = [...state.all].every((p) => state.expanded.has(p));
     return h_flex().gap(6).items_center()
       .when(!state.raw && state.all.size > 1, (el) => el.child(iconButton("fold", open ? "collapse" : "expand",
         open ? "Collapse all (alt-click a row: just its branch)" : "Expand all (alt-click a row: just its branch)", false,
         () => { state.expanded = open ? new Set([""]) : new Set(state.all); refresh(state); })))
+      .when(state.raw, (el) => el.child(wrapButton(state, "json")))
       .child(rawToggle(state, "Tree", "json"));
   },
 

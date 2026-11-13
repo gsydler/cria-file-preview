@@ -2,7 +2,7 @@
 import { div, svg } from "gpui-kit";
 import { h_flex } from "gpui-base";
 import { theme } from "herdr";
-import { codeState } from "./text.js";
+import { codeState, wraps, toggleWrap } from "./text.js";
 
 /** Options side by side, one of them on: [[id, label, on, action]]. */
 export function segmented(options) {
@@ -18,6 +18,10 @@ export const rawToggle = (state, view, language) => segmented([
   ["view", view, !state.raw, () => { state.raw = false; }],
   ["raw", "Raw", state.raw, () => { state.raw = true; if (!state.editor) state.editor = codeState(state.text, language); }],
 ]);
+
+/** Wrap lines, for a view showing state.editor. */
+export const wrapButton = (state, language) => iconButton("wrap", "wrap", wraps(state.editor) ? "Don't wrap long lines" : "Wrap long lines",
+  wraps(state.editor), () => toggleWrap(state, language));
 
 /** A 28px icon button from this mod's folder; `on` draws it pressed. */
 export function iconButton(id, icon, tip, on, run) {

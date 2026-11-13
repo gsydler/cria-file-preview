@@ -31,12 +31,27 @@ export async function readLongText(file, on) {
   return { text: checked(wholeLines(r.stdout)), cut: true };
 }
 
+// Whether long lines wrap: the person's last choice, kept across restarts, for
+// every editor made from then on. An editor can't change it once made.
+const WRAP = "cria-file-preview.wrap", wrapped = new WeakMap();
+const wrapping = () => localStorage.getItem(WRAP) === "true";
+export const wraps = (editor) => wrapped.get(editor) ?? false;
+
 export function codeState(text, language) {
-  const t = theme();
-  return EditorState.new({ language, readonly: true,
+  const t = theme(), wrap = wrapping();
+  const editor = EditorState.new({ language, readonly: true, soft_wrap: wrap,
     value: text.length > LIMIT ? text.slice(0, LIMIT) + "\n… (file truncated)" : text,
     font_family: settings().font_family, font_size: 13,
     syntax: { keyword: t.ansi5, string: t.ansi2, comment: t.dim, function: t.ansi4, type: t.ansi3, number: t.ansi1, constant: t.ansi6 } });
+  wrapped.set(editor, wrap);
+  return editor;
+}
+
+/** Wrap on or off from now on, and state.editor made again from state.text with it. */
+export function toggleWrap(state, language) {
+  localStorage.setItem(WRAP, String(!wraps(state.editor)));
+  state.editor?.release();
+  state.editor = codeState(state.text, language);
 }
 
 export const codeView = (state) => Editor.new(state).flex_1().min_h(0);
