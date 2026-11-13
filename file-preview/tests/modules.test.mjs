@@ -4,6 +4,7 @@ import { viewerFor, languageOf, extension, basename } from "../mods/cria-file-pr
 import { resolveLink } from "../mods/cria-file-preview/links.js";
 import { normalize, dirname } from "../mods/cria-file-preview/paths.js";
 import { openCommand } from "../mods/cria-file-preview/open-file.js";
+import { wheelZoom, zoomAt, placed, offsetFor, focusAt } from "../mods/cria-file-preview/pan-zoom.js";
 
 test("viewerFor picks by extension, code by default", () => {
   assert.equal(viewerFor("/a/README.md"), "markdown");
@@ -263,4 +264,36 @@ test("terminalEditor: the words after the marker, else nothing", () => {
   assert.deepEqual(terminalEditor("__cria_editor__\0nvim\0-p\0"), ["nvim", "-p"]);
   assert.equal(terminalEditor(""), null);
   assert.equal(terminalEditor("some output a graphical editor printed\n"), null);
+});
+
+test("wheel zoom: away zooms in, toward zooms out, within 25 to 400%", () => {
+  assert.ok(wheelZoom(1, 50) > 1);
+  assert.ok(wheelZoom(1, -50) < 1);
+  assert.equal(wheelZoom(1, 0), 1);
+  assert.equal(wheelZoom(3.9, 1000), 4);
+  assert.equal(wheelZoom(0.3, -1000), 0.25);
+});
+
+test("zoomAt keeps the point under the pointer", () => {
+  const offset = { x: 10, y: 20 }, point = { x: 110, y: 70 };
+  const after = zoomAt(offset, 1, 2, point);
+  // The picture point under the pointer: (point - offset) / scale, the same before and after.
+  assert.deepEqual({ x: (point.x - after.x) / 2, y: (point.y - after.y) / 2 }, { x: 100, y: 50 });
+});
+
+test("placed centers a side that fits and keeps a larger one on screen", () => {
+  const pane = { width: 400, height: 300 }, pad = 24;
+  assert.deepEqual(placed(null, { width: 200, height: 100 }, pane, pad), { x: 100, y: 100 });
+  assert.deepEqual(placed({ x: 999, y: 999 }, { width: 200, height: 100 }, pane, pad), { x: 100, y: 100 });
+  const big = { width: 1000, height: 1000 };
+  assert.deepEqual(placed(null, big, pane, pad), { x: -300, y: -350 });
+  assert.deepEqual(placed({ x: 500, y: 500 }, big, pane, pad), { x: 24, y: 24 });
+  assert.deepEqual(placed({ x: -5000, y: -5000 }, big, pane, pad), { x: -624, y: -724 });
+});
+
+test("focusAt and offsetFor are inverses, and a null focus stays centered", () => {
+  const size = { width: 800, height: 600 }, pane = { width: 400, height: 300 };
+  const offset = { x: -150, y: -100 };
+  assert.deepEqual(offsetFor(focusAt(offset, size, pane), size, pane), offset);
+  assert.equal(offsetFor(null, size, pane), null);
 });

@@ -6,7 +6,12 @@ Every change people using the mod would notice. The format follows [Keep a Chang
 
 ### Added
 
+- Hold cmd (ctrl on Linux and Windows) and scroll over a picture to zoom around the pointer. A zoomed picture moves with a drag or the wheel, and shift turns a mouse wheel sideways.
 - **Wrap lines**, an icon on code views and every Raw view, folds long lines at the pane's edge. Files you open afterwards use the same choice.
+
+### Changed
+
+- A picture zoomed past the pane no longer shows scrollbars: drag it or scroll to move it.
 
 ## [0.1.1] - 2026-11-13
 

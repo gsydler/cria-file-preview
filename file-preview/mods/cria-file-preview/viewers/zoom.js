@@ -3,8 +3,7 @@
 import { div } from "gpui-kit";
 import { h_flex } from "gpui-base";
 import { theme } from "herdr";
-
-export const ZOOMS = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 3, 4];
+import { ZOOMS } from "../pan-zoom.js";
 
 /** `current`: the scale shown now, which Fit also has. */
 export function zoomControl(state, current) {

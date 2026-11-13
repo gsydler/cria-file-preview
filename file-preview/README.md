@@ -21,7 +21,7 @@ A [Herdr](https://herdr.dev) mod that previews a file in a tab or a split: Markd
 |---|---|---|
 | Markdown | `.md` `.markdown` `.mdx` | Rendered, or Raw. A table of contents (with two or more headings). Web and mail links open in the browser; links to local files open in the same preview; `#heading` links show the document from that heading. Local images (SVG included) are drawn inline, and a linked image is clickable. Web images load only when you click **Load them**. |
 | PDF | `.pdf` | Every page in one scrolling column, ‹ › and **Go to** page, zoom −/Fit/+. Pages render in batches of 6 from the one you jump to, up to 500 pages. Password-protected PDFs say so. |
-| Image | `.png` `.jpg` `.jpeg` `.gif` `.webp` `.svg` `.bmp` `.tiff` `.heic` | Fitted to the pane or zoomed from 25% to 400%, with its size in pixels. |
+| Image | `.png` `.jpg` `.jpeg` `.gif` `.webp` `.svg` `.bmp` `.tiff` `.heic` | Fitted to the pane or zoomed from 25% to 400%, with its size in pixels. Cmd-scroll (ctrl elsewhere) zooms around the pointer; drag or scroll to move a zoomed picture. |
 | Table | `.csv` `.tsv` | A sticky header, row numbers, sideways scrolling, up to 100,000 rows drawn only while on screen. Quoted cells per RFC 4180; a `.csv` whose first line has more `;` than `,` splits on semicolons. Table or Raw. |
 | JSON | `.json` | A collapsible tree: click a row to open or close it, alt-click to do the whole branch, one button to expand or collapse everything. Invalid JSON shows the parse error and the source. Tree or Raw. |
 | Code | anything else | Syntax colors and line numbers, read-only, up to 400,000 characters. Binary files say so instead. **Wrap lines** here and in every Raw view, remembered across files and restarts. |

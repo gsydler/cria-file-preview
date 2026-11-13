@@ -52,7 +52,8 @@
     "facts": { "width": 240, "height": 120 },
     "visible": ["Toolbar: 240 × 120 and − Fit +", "The blue SVG centered at its own size"],
     "manual": [
-      { "do": "Click + until 400%, then the percentage", "expect": "The picture grows past the pane with scrollbars; the click returns to Fit" }
+      { "do": "Click + until 400%, then drag the picture and scroll over it", "expect": "The picture grows past the pane, the pointer is a hand, and both the drag and the wheel move it; it never leaves more than a small margin of canvas at an edge" },
+      { "do": "Hold cmd (ctrl elsewhere) and scroll over a corner of the picture, then click the percentage", "expect": "The picture zooms around the pointer, the corner staying under it; the click returns to Fit, centered" }
     ]
   },
   "img/picture.png": {
