@@ -6,7 +6,13 @@ Every change people using the mod would notice. The format follows [Keep a Chang
 
 ### Changed
 
+- Open in editor opens vim, nano and other editors that draw in a terminal in a new Herdr tab, on macOS and Linux, when your login shell answers before the ⋯ menu's copy stops. Before, nothing opened.
+- The install leaves a Files panel that is `cria-files-extended` as it is: that panel opens files here by itself.
 - The mod moved to the `herdr-cria` repo, which holds several mods: add it with `herdr.dev/mods/gsydler/herdr-cria--file-preview`. Nothing changes for a copy already installed, or for a Files panel already patched to open it: the mod is still called `cria-file-preview`.
+
+### Fixed
+
+- Open in editor finds `$EDITOR` when your login shell's profile prints a greeting.
 
 ## [0.1.0] - 2026-11-05
 

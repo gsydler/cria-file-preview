@@ -256,3 +256,11 @@ test("platform commands: Windows passes paths to PowerShell as character codes",
   assert.equal(program, "powershell");
   assert.ok(args.at(-1).endsWith(` (-join [char[]]@(${codes}))`));
 });
+
+import { terminalEditor } from "../mods/cria-file-preview/editor-command.js";
+
+test("terminalEditor: the words after the marker, else nothing", () => {
+  assert.deepEqual(terminalEditor("__cria_editor__\0nvim\0-p\0"), ["nvim", "-p"]);
+  assert.equal(terminalEditor(""), null);
+  assert.equal(terminalEditor("some output a graphical editor printed\n"), null);
+});

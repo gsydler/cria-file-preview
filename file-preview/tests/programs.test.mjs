@@ -10,6 +10,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { programs, pdfPages, pictureSize, popplerPages } from "../mods/cria-file-preview/programs.js";
 import { commands, powershell } from "../mods/cria-file-preview/platform.js";
+import { terminalEditor } from "../mods/cria-file-preview/editor-command.js";
 
 const SAMPLES = fileURLToPath(new URL("../samples/", import.meta.url));
 const PLATFORM = { darwin: "macos", win32: "windows" }[process.platform] ?? process.platform; // as Herdr's window().platform
@@ -256,7 +257,9 @@ function fakePosix(name) {
 }
 
 const posix = { skip: PLATFORM === "windows" && "no sh on Herdr's Windows PATH" };
-const editorRun = (file, env) => run(commands(PLATFORM, new Set()).editor(file), { env: { ...process.env, SHELL: "/bin/sh", VISUAL: "", EDITOR: "", ...env } });
+// HOME is an empty folder: the login shell reads no profile of the person running the tests.
+const home = () => mkdtempSync(join(tmpdir(), "cria-home-"));
+const editorRun = (file, env) => run(commands(PLATFORM, new Set()).editor(file), { env: { ...process.env, HOME: home(), SHELL: "/bin/sh", VISUAL: "", EDITOR: "", ...env }, timeout: 60000 });
 
 test("editor: $VISUAL without its wait flags, the file whole", posix, () => {
   const { program, out } = fakePosix("ed"), file = "/some dir/$(touch pwned) it's.md";
@@ -281,4 +284,20 @@ test("editor: a program that isn't there fails, for the toast", posix, () => {
   const r = editorRun("/a.md", { VISUAL: "/no/such/editor" });
   assert.notEqual(r.status, 0);
   assert.match(r.stderr, /no\/such\/editor/);
+});
+
+test("editor: a terminal editor comes back for a Herdr tab, without its wait flags", posix, () => {
+  const r = editorRun("/a.md", { VISUAL: "/usr/bin/nvim --wait -p" });
+  assert.equal(r.status, 0, r.stderr);
+  assert.deepEqual(terminalEditor(r.stdout), ["/usr/bin/nvim", "-p"]);
+  assert.deepEqual(terminalEditor(editorRun("/a.md", { EDITOR: "emacs -nw" }).stdout), ["emacs", "-nw"]);
+  assert.equal(terminalEditor(editorRun("/a.md", { EDITOR: "/no/such/emacs" }).stdout), null, "a graphical Emacs");
+});
+
+test("editor: a profile's greeting on stdout doesn't become part of $EDITOR", posix, () => {
+  const { program, out } = fakePosix("ed"), dir = home();
+  writeFileSync(join(dir, ".profile"), `echo Welcome back\nexport VISUAL='${program} --wait'\n`);
+  const r = editorRun("/a.md", { HOME: dir });
+  assert.equal(r.status, 0, r.stderr);
+  assert.equal(readFileSync(out, "utf8").trim(), "/a.md");
 });

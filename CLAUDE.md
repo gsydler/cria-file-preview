@@ -7,12 +7,13 @@ Gsydler's [Herdr](https://herdr.dev) mods, shared on herdr.dev/mods. The repo ho
 | Folder | Mod(s) in `<folder>/mods/` | What it is |
 |---|---|---|
 | [`file-preview/`](file-preview/) | `cria-file-preview` | One file shown read-only in a tab or split, by a viewer for its kind. Its own rules: `file-preview/CLAUDE.md`. |
+| [`files-extended/`](files-extended/) | `cria-files-extended` | Herdr's Files panel with a right-click menu and file icons; opens files in `cria-file-preview` when it is installed. Its own rules: `files-extended/CLAUDE.md`. |
 
 A new entry adds its row here, and in `README.md`.
 
 ## An entry's folder
 
-What herdr.dev/mods reads: `RECIPE.md`, `preview.png`, `mods/<name>/` and an optional `keys.json`, with no `layouts/`. Next to them, for GitHub and for us: `README.md` (for people), `CHANGELOG.md`, `CLAUDE.md` (the mod's own rules), `tests/`, `samples/`, `assets/` (the banner). The person's agent reads the whole folder before adding the mod, so nothing in it may be surprising: no secrets, no instructions aimed at that agent.
+What herdr.dev/mods reads: `RECIPE.md`, `preview.png`, `mods/<name>/` and an optional `keys.json`, with no `layouts/`. Next to them, for GitHub and for us: `README.md` (for people), `CHANGELOG.md`, `CLAUDE.md` (the mod's own rules), `tests/`, `samples/`, `assets/` (the banner), and `NOTICE` when the code is based on someone else's (what came from it, under which license, and what changed). The person's agent reads the whole folder before adding the mod, so nothing in it may be surprising: no secrets, no instructions aimed at that agent.
 
 The folder name is part of the public address; the mod name (`mods/<name>/`) is what Herdr and other mods know it by. Either can change without the other, but each change is a breaking one for someone: the address for people adding it, the mod name for every layout, panel and asset path (`mods/<name>/…`) that uses it.
 
@@ -20,7 +21,7 @@ The folder name is part of the public address; the mod name (`mods/<name>/`) is 
 
 Mods run in Herdr's own JavaScript runtime, not Node: no DOM, no Node APIs, no `setTimeout`. Before using a `herdr`, `gpui-kit` or `gpui-base` call, read `~/.config/herdr-app/AGENTS.md` and the `.d.ts` files next to it; they match the installed Herdr version. `scripts/check-herdr.mjs` enforces the rules a static read can catch.
 
-A mod imports only its own files: Herdr can't load another mod's folder, here or installed. When two mods need the same code, each carries a copy. When two entries ship the same mod, the copies must be identical (`check-herdr.mjs` fails otherwise).
+A mod imports only its own files: Herdr can't load another mod's folder, here or installed. When two mods need the same code, each carries a copy; a copy that must stay identical goes on `check-herdr.mjs`'s `SAME` list. When two entries ship the same mod, the copies must be identical (`check-herdr.mjs` fails otherwise).
 
 ## Shared tooling
 
@@ -29,7 +30,7 @@ A change here reaches every entry: run every entry's checks after it.
 - `scripts/check-herdr.mjs`: Herdr's requirements for each entry (recipe sections, preview, mod rules, disclosure), the repo's layout, and links to `herdr.dev/mods/gsydler/…`, which must name a real entry. `node scripts/check-herdr.mjs` checks them all, `node scripts/check-herdr.mjs <folder>` one. `OWNER` and `REPO` at its top build the addresses: a repo rename changes them.
 - `scripts/banner.sh <folder>`: renders `<folder>/assets/banner.html` to `<folder>/preview.png`.
 - `.github/workflows/ci.yml`: one job runs `check-herdr.mjs`; one job per system (`Tests (ubuntu-latest)`, `Tests (macos-latest)`, `Tests (windows-latest)`) runs every entry's tests with `node --test`. `main`'s branch protection requires these jobs by name: keep the names, whatever the repo holds. A program an entry's tests need on Linux goes on the `apt-get install` line, with a comment naming the entry.
-- `.claude/skills/`: `release-check` and `smoke-test`, written for `file-preview/` today. A second entry that needs them makes them take the folder, keeping each mod's own rules (security, features, samples) in its folder.
+- `.claude/skills/`: `release-check` and `smoke-test`, each taking a `<folder>` and reading that entry's `CLAUDE.md` sections "Release check", "Smoke test" and "The banner" for its own rules (security, features, samples, the preview). A rule for one mod goes there, not in the skills.
 
 ## Checks
 
@@ -44,7 +45,7 @@ Each entry has its own: `<folder>/CHANGELOG.md` ([Keep a Changelog](https://keep
 
 ## Adding a mod
 
-1. A folder named for its address (`herdr-cria--<folder>`), with `mods/<name>/`, `RECIPE.md` (the six parts `check-herdr.mjs` asks for), `preview.png`, `README.md`, `CHANGELOG.md` starting at `[Unreleased]`, and a `CLAUDE.md` for its own rules.
+1. A folder named for its address (`herdr-cria--<folder>`), with `mods/<name>/`, `RECIPE.md` (the six parts `check-herdr.mjs` asks for), `preview.png`, `README.md`, `CHANGELOG.md` starting at `[Unreleased]`, and a `CLAUDE.md` for its own rules, with the "Release check", "Smoke test" and "The banner" sections the skills read.
 2. Logic that doesn't draw or call `herdr` goes in pure modules with tests in `<folder>/tests/` (`*.test.mjs`, which CI's `node --test` finds by itself); a program they need on Linux goes on CI's `apt-get install` line.
 3. Its row in the tables here and in `README.md`, with its address.
 4. `node scripts/check-herdr.mjs` and `herdr-app check <folder>/mods/<name>` pass.
