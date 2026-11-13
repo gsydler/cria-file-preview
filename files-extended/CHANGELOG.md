@@ -4,6 +4,8 @@ Every change people using the mod would notice. The format follows [Keep a Chang
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-13
+
 ### Added
 
 - Herdr's Files panel with an icon for each kind of file, in your theme's colors (`"icon_colors": false` makes them one color), and a right-click menu: New file and New folder, Open in editor, Open with default app, Reveal, Open in terminal, Cut, Copy, Duplicate and Paste, Copy name, path and relative path, Rename, Move to Trash, Delete (asking first), Expand all, Fold folder and Collapse all.
