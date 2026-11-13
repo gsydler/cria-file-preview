@@ -4,6 +4,8 @@ Every change people using the mod would notice. The format follows [Keep a Chang
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-13
+
 ### Changed
 
 - Open in editor opens vim, nano and other editors that draw in a terminal in a new Herdr tab, on macOS and Linux, when your login shell answers before the ⋯ menu's copy stops. Before, nothing opened.
