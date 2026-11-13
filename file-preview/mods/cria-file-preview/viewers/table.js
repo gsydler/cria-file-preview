@@ -6,7 +6,7 @@ import { theme, settings } from "herdr";
 import { extension } from "../kinds.js";
 import { delimiterOf, parseDelimited, columnWidths } from "../delimited.js";
 import { readLongText, codeState, codeView } from "./text.js";
-import { rawToggle } from "./controls.js";
+import { rawToggle, wrapButton } from "./controls.js";
 
 const ROW = 26, NUMBER = 52, LIMIT = 100000;
 let views = 0;
@@ -23,6 +23,7 @@ export default {
 
   toolbar: (state) => h_flex().gap(8).items_center().text_size(12).text_color(theme().dim)
     .child(`${state.body.length.toLocaleString()}${state.truncated ? "+" : ""} rows × ${state.widths.length} columns`)
+    .when(state.raw, (el) => el.child(wrapButton(state, "text")))
     .child(rawToggle(state, "Table", "text")),
 
   render(state) {

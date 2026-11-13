@@ -1,2 +1,3 @@
 Plain text, shown in the code viewer.
 No extension-specific colours.
+One long line follows, to try Wrap lines: it runs on well past the width of a half-window pane, so with Wrap lines off it scrolls sideways, and with Wrap lines on it folds under itself at the pane's edge without adding any line breaks to the file.

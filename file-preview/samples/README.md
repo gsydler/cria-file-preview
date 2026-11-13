@@ -59,7 +59,7 @@ A web image, shown as a link: ![badge](https://img.shields.io/badge/file--previe
 | [broken.json](broken.json) | json | the parse error, Raw |
 | [notutf8.txt](notutf8.txt) | code | Latin-1 text, which says it can't be previewed |
 | [code.js](code.js) | code | syntax colours |
-| [notes.txt](notes.txt) | code | plain text |
+| [notes.txt](notes.txt) | code | plain text, with one long line for Wrap lines |
 
 Edit any of them while its preview is open: it reloads by itself.
 
